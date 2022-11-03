@@ -1,3 +1,6 @@
+#################################
+# Auto generated from github ###
+################################
 # Prerequisites
 *.d
 
@@ -50,3 +53,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+############################
+
+#MacOS
+.DS_Store
