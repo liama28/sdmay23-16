@@ -1,6 +1,6 @@
-cd ~/Desktop/Senior_Design/;
+cd ~/Desktop/Senior_Design/sdmay23-16/Liam_experiments/;
 clc;
-fid = readmatrix('20221102T164727.txt');
+fid = readmatrix('20221106T142356.txt');
 
 fid_new=diff(fid);
 

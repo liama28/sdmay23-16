@@ -1,9 +1,7 @@
 #!/bin/bash
-
-#start_time=$(date +%s)
-# Cored
-temp=${/sys/devices/virtual/powercap/intel-rapl/intel-rapl\:0/intel-rapl\:0\:0/energy_uj}
-for i in {1..5001};
+echo "START POWER DATA COLLECTION:" $(date +"%H:%M:%S");
+for ((i=1; i<=${1}; i++));
 do
-  temp2=${/sys/devices/virtual/powercap/intel-rapl/intel-rapl\:0/intel-rapl\:0\:0/energy_uj}
-  echo temp2-temp1
+    echo $(cat /sys/devices/virtual/powercap/intel-rapl/intel-rapl\:0/intel-rapl\:0\:0/energy_uj)
+done
+echo "END POWER DATA COLLECTION:" $(date +"%H:%M:%S");

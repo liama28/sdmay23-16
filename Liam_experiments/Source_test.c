@@ -103,6 +103,8 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
 
 int main(int argc,
   const char * * argv) {
+  int t;
+  for(t=0; t<10; t++) {
     sleep(2);
   size_t malicious_x = (size_t)(secret - (char * ) array1); /* default for malicious_x */
   int i, score[2], len = 40;
@@ -140,5 +142,6 @@ int main(int argc,
       printf("(second best: 0x%02X score=%d)", value[1], score[1]);
     printf("\n");
   }
+}
   return (0);
 }

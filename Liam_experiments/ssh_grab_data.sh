@@ -1,5 +1,5 @@
 #!/bin/bash
-#sh test.sh ~/Desktop/Senior_Design/ /home/sdmay23-16/Liam_dir/ Source_test.c
+#sh ssh_grab_data.sh ~/Desktop/Senior_Design/sdmay23-16/Liam_experiments/ /home/sdmay23-16/Liam_dir/ Source_test.c
 
 #Directory on host machine with attack c file and where output data text file will go
 #SOURCE_DIR=~/Desktop/Senior_Design/
