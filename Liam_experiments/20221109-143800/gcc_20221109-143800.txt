@@ -1,0 +1,22 @@
+20221109-143800.c: In function ‘main’:
+20221109-143800.c:113:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+  113 |     printf("%15s \t %016p\n", "array1_size", &array1_size);
+      |                         ^
+20221109-143800.c:115:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+  115 |     printf("%15s \t %016p\n", "array1", array1);
+      |                         ^
+20221109-143800.c:117:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+  117 |     printf("%15s \t %016p\n", "array2", array2);
+      |                         ^
+20221109-143800.c:118:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+  118 |     printf("%15s \t %016p\n", "secret", secret);
+      |                         ^
+20221109-143800.c:119:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+  119 |     printf("%15s \t %016p\n", "malicious_x", (void *)malicious_x);
+      |                         ^
+20221109-143800.c:133:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+  133 |     printf("Reading at malicious_x = %d... ", (void * ) malicious_x);
+      |                                      ~^       ~~~~~~~~~~~~~~~~~~~~~
+      |                                       |       |
+      |                                       int     void *
+      |                                      %p

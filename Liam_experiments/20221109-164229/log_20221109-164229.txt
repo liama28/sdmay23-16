@@ -1,0 +1,103 @@
+START OF ATTACKS 16:42:30
+PID: 3012064
+START ATTACK 1 16:42:31
+           Name 	 Address
+---------------------------------------------
+    array1_size 	 0x00557d0a882024
+         array1 	 0x00557d0a882040
+         array2 	 0x00557d0a882540
+         secret 	 0x00557d0a880008
+    malicious_x 	 0xffffffffffffdfc8
+Reading 40 bytes:
+Reading at malicious_x = -8248... 0x54='T' score=999 (second best: 0x00 score=827)
+Reading at malicious_x = -8247... 0x68='h' score=999 (second best: 0x00 score=821)
+Reading at malicious_x = -8246... 0x69='i' score=999 (second best: 0x01 score=812)
+Reading at malicious_x = -8245... 0x73='s' score=997 (second best: 0x00 score=796)
+Reading at malicious_x = -8244... 0x20=' ' score=999 (second best: 0x00 score=827)
+Reading at malicious_x = -8243... 0x63='c' score=999 (second best: 0x00 score=839)
+Reading at malicious_x = -8242... 0x6F='o' score=999 (second best: 0x00 score=833)
+Reading at malicious_x = -8241... 0x64='d' score=999 (second best: 0x00 score=834)
+Reading at malicious_x = -8240... 0x65='e' score=999 (second best: 0x00 score=819)
+Reading at malicious_x = -8239... 0x20=' ' score=999 (second best: 0x00 score=822)
+Reading at malicious_x = -8238... 0x75='u' score=999 (second best: 0x00 score=817)
+Reading at malicious_x = -8237... 0x73='s' score=999 (second best: 0x00 score=822)
+Reading at malicious_x = -8236... 0x65='e' score=999 (second best: 0x00 score=800)
+Reading at malicious_x = -8235... 0x73='s' score=999 (second best: 0x01 score=866)
+Reading at malicious_x = -8234... 0x20=' ' score=999 (second best: 0x00 score=873)
+Reading at malicious_x = -8233... 0x74='t' score=999 (second best: 0x00 score=872)
+Reading at malicious_x = -8232... 0x68='h' score=999 (second best: 0x01 score=872)
+Reading at malicious_x = -8231... 0x65='e' score=999 (second best: 0x01 score=826)
+Reading at malicious_x = -8230... 0x20=' ' score=997 (second best: 0x00 score=809)
+Reading at malicious_x = -8229... 0x53='S' score=999 (second best: 0x00 score=818)
+Reading at malicious_x = -8228... 0x70='p' score=996 (second best: 0x00 score=772)
+Reading at malicious_x = -8227... 0x65='e' score=999 (second best: 0x00 score=833)
+Reading at malicious_x = -8226... 0x63='c' score=999 (second best: 0x00 score=878)
+Reading at malicious_x = -8225... 0x74='t' score=999 (second best: 0x00 score=892)
+Reading at malicious_x = -8224... 0x72='r' score=999 (second best: 0x00 score=846)
+Reading at malicious_x = -8223... 0x65='e' score=999 (second best: 0x00 score=829)
+Reading at malicious_x = -8222... 0x20=' ' score=999 (second best: 0x00 score=850)
+Reading at malicious_x = -8221... 0x76='v' score=999 (second best: 0x01 score=830)
+Reading at malicious_x = -8220... 0x75='u' score=999 (second best: 0x00 score=843)
+Reading at malicious_x = -8219... 0x6C='l' score=998 (second best: 0x00 score=845)
+Reading at malicious_x = -8218... 0x6E='n' score=999 (second best: 0x00 score=834)
+Reading at malicious_x = -8217... 0x65='e' score=998 (second best: 0x00 score=807)
+Reading at malicious_x = -8216... 0x72='r' score=999 (second best: 0x01 score=872)
+Reading at malicious_x = -8215... 0x61='a' score=999 (second best: 0x00 score=836)
+Reading at malicious_x = -8214... 0x62='b' score=999 (second best: 0x00 score=806)
+Reading at malicious_x = -8213... 0x69='i' score=999 (second best: 0x01 score=818)
+Reading at malicious_x = -8212... 0x6C='l' score=999 (second best: 0x00 score=822)
+Reading at malicious_x = -8211... 0x69='i' score=999 (second best: 0x00 score=793)
+Reading at malicious_x = -8210... 0x74='t' score=998 (second best: 0x00 score=811)
+Reading at malicious_x = -8209... 0x79='y' score=999 (second best: 0x00 score=837)
+END ATTACK 1 16:42:35
+START ATTACK 2 16:42:37
+           Name 	 Address
+---------------------------------------------
+    array1_size 	 0x0055d2f501c024
+         array1 	 0x0055d2f501c040
+         array2 	 0x0055d2f501c540
+         secret 	 0x0055d2f501a008
+    malicious_x 	 0xffffffffffffdfc8
+Reading 40 bytes:
+Reading at malicious_x = -8248... 0x54='T' score=999 (second best: 0x01 score=651)
+Reading at malicious_x = -8247... 0x68='h' score=998 (second best: 0x00 score=693)
+Reading at malicious_x = -8246... 0x69='i' score=998 (second best: 0x00 score=672)
+Reading at malicious_x = -8245... 0x73='s' score=999 (second best: 0x00 score=646)
+Reading at malicious_x = -8244... 0x20=' ' score=999 (second best: 0x00 score=640)
+Reading at malicious_x = -8243... 0x63='c' score=999 (second best: 0x01 score=647)
+Reading at malicious_x = -8242... 0x6F='o' score=998 (second best: 0x00 score=649)
+Reading at malicious_x = -8241... 0x64='d' score=999 (second best: 0x01 score=652)
+Reading at malicious_x = -8240... 0x65='e' score=998 (second best: 0x00 score=678)
+Reading at malicious_x = -8239... 0x20=' ' score=999 (second best: 0x01 score=672)
+Reading at malicious_x = -8238... 0x75='u' score=999 (second best: 0x00 score=686)
+Reading at malicious_x = -8237... 0x73='s' score=999 (second best: 0x00 score=669)
+Reading at malicious_x = -8236... 0x65='e' score=998 (second best: 0x00 score=684)
+Reading at malicious_x = -8235... 0x73='s' score=999 (second best: 0x00 score=672)
+Reading at malicious_x = -8234... 0x20=' ' score=998 (second best: 0x00 score=672)
+Reading at malicious_x = -8233... 0x74='t' score=998 (second best: 0x00 score=644)
+Reading at malicious_x = -8232... 0x68='h' score=999 (second best: 0x01 score=689)
+Reading at malicious_x = -8231... 0x65='e' score=998 (second best: 0x00 score=684)
+Reading at malicious_x = -8230... 0x20=' ' score=998 (second best: 0x00 score=670)
+Reading at malicious_x = -8229... 0x53='S' score=999 (second best: 0x00 score=674)
+Reading at malicious_x = -8228... 0x70='p' score=995 (second best: 0x01 score=675)
+Reading at malicious_x = -8227... 0x65='e' score=999 (second best: 0x01 score=670)
+Reading at malicious_x = -8226... 0x63='c' score=998 (second best: 0x00 score=654)
+Reading at malicious_x = -8225... 0x74='t' score=999 (second best: 0x00 score=679)
+Reading at malicious_x = -8224... 0x72='r' score=999 (second best: 0x00 score=665)
+Reading at malicious_x = -8223... 0x65='e' score=997 (second best: 0x00 score=664)
+Reading at malicious_x = -8222... 0x20=' ' score=997 (second best: 0x00 score=664)
+Reading at malicious_x = -8221... 0x76='v' score=999 (second best: 0x00 score=683)
+Reading at malicious_x = -8220... 0x75='u' score=996 (second best: 0x00 score=682)
+Reading at malicious_x = -8219... 0x6C='l' score=997 (second best: 0x00 score=687)
+Reading at malicious_x = -8218... 0x6E='n' score=998 (second best: 0x00 score=649)
+Reading at malicious_x = -8217... 0x65='e' score=998 (second best: 0x01 score=684)
+Reading at malicious_x = -8216... 0x72='r' score=998 (second best: 0x00 score=584)
+Reading at malicious_x = -8215... 0x61='a' score=999 (second best: 0x00 score=663)
+Reading at malicious_x = -8214... 0x62='b' score=999 (second best: 0x00 score=645)
+Reading at malicious_x = -8213... 0x69='i' score=999 (second best: 0x00 score=687)
+Reading at malicious_x = -8212... 0x6C='l' score=997 (second best: 0x00 score=674)
+Reading at malicious_x = -8211... 0x69='i' score=999 (second best: 0x00 score=676)
+Reading at malicious_x = -8210... 0x74='t' score=999 (second best: 0x00 score=660)
+Reading at malicious_x = -8209... 0x79='y' score=999 (second best: 0x00 score=678)
+END ATTACK 2 16:42:42
+END OF ATTACKS 16:42:44

