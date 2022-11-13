@@ -4,7 +4,6 @@ import csv
 import sys
 import os
 import time
-import matlab.engine
 
 wd = os.getcwd() + "/"
 source_file = sys.argv[1]
@@ -17,9 +16,3 @@ os.system(command)
 data_file = name + "/" + "data_" + name + ".txt"
 
 print(data_file)
-
-eng = matlab.engine.start_matlab()
-
-eng.graph_raw_power_data(data_file)
-
-eng.quit()

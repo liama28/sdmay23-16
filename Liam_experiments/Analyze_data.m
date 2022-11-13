@@ -1,8 +1,7 @@
-function []=graph_raw_power_data(arg1)
 
 cd ~/Desktop/Senior_Design/sdmay23-16/Liam_experiments/;
 clc;
-fid = readmatrix(arg1);
+fid = readmatrix("");
 
 fid_new=diff(fid);
 
@@ -34,6 +33,3 @@ title('Raw Data');
 %plot(x,yy1,'-o',x,fid_new,'-x')
 
 %plot(x,yy1,x,yy2,x,yy3)
-
-
-end

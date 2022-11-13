@@ -20,8 +20,8 @@ cd ${SOURCE_DIR}
 
 mkdir ${NAME}
 
-scp $SOURCE_DIR$SOURCE_FILE ${USERNAME}@${HOST}:~/Liam_dir/${NAME}.c >> ${NAME}/scp_${NAME}.txt
+scp $SOURCE_DIR$SOURCE_FILE ${USERNAME}@${HOST}:~/Liam_dir/${NAME}.c
 
-ssh -l ${USERNAME} ${HOST} "sudo ~/Liam_dir/run_attack.sh ${NAME}.c ${NAME} ${RUNS} ${WAIT_TIME}" >> ${NAME}/scp_${NAME}.txt
+ssh -l ${USERNAME} ${HOST} "sudo ~/Liam_dir/run_attack.sh ${NAME}.c ${NAME} ${RUNS} ${WAIT_TIME}"
 
-scp -r ${USERNAME}@${HOST}:~/Liam_dir/${NAME} ${SOURCE_DIR} >> ${NAME}/scp_${NAME}.txt
+scp -r ${USERNAME}@${HOST}:~/Liam_dir/${NAME} ${SOURCE_DIR}
