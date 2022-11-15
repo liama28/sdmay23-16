@@ -30,6 +30,10 @@ sudo ./data.sh >> "${NAME}/data_${NAME}.txt" &
 sleep 1
 _pid=$(ps --ppid $! -o pid=)
 
+#./clock_speed.sh >> "${NAME}/clock_speed_${NAME}.txt" &
+
+#_pid_clock_speed=$!
+
 echo "PID: ${_pid}" >> ${NAME}/log_${NAME}.txt
 
 for ((i=1; i<=${RUNS}; i++));
@@ -43,3 +47,5 @@ done
 echo "END OF ATTACKS" $(date +"%H:%M:%S") >> ${NAME}/log_${NAME}.txt
 
 sudo kill -SIGUSR1 ${_pid}
+
+#sudo kill ${_pid_clock_speed}

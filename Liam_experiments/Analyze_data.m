@@ -1,13 +1,23 @@
 
 cd ~/Desktop/Senior_Design/sdmay23-16/Liam_experiments/;
 clc;
-fid = readmatrix("");
+fid = readmatrix("20221113-134139/data_20221113-134139.txt");
 
 fid_new=diff(fid);
 
 for i = 1 : length(fid_new)
     if (fid_new(i) > 10000)
         fid_new(i) = mean(fid_new);
+    end
+end
+
+fid_2 = readmatrix("baseline.txt");
+
+fid_new_2=diff(fid);
+
+for i = 1 : length(fid_new_2)
+    if (fid_new_2(i) > 10000)
+        fid_new_2(i) = mean(fid_new_2);
     end
 end
 
