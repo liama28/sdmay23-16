@@ -19,9 +19,9 @@ HOST=10.26.52.121
 cd ${SOURCE_DIR}
 
 mkdir ${NAME}
+ 
+scp -i ~/.ssh/id_sdmay23_rsa $SOURCE_DIR$SOURCE_FILE ${USERNAME}@${HOST}:~/Kevin_Test/spectre-attack/${NAME}.c
 
-scp $SOURCE_DIR$SOURCE_FILE ${USERNAME}@${HOST}:~/Kevin_Test/spectre-attack/${NAME}.c
+ssh -i ~/.ssh/id_sdmay23_rsa -l ${USERNAME} ${HOST} "sudo ~/Kevin_Test/spectre-attack/run_attack.sh ${NAME}.c ${NAME} ${RUNS} ${WAIT_TIME}"
 
-ssh -l ${USERNAME} ${HOST} "sudo ~/Kevin_Test/spectre-attack/run_attack.sh ${NAME}.c ${NAME} ${RUNS} ${WAIT_TIME}"
-
-scp -r ${USERNAME}@${HOST}:~/Kevin_Test/spectre-attack/${NAME} ${SOURCE_DIR}
+scp -i ~/.ssh/id_sdmay23_rsa -r ${USERNAME}@${HOST}:~/Kevin_Test/spectre-attack/${NAME} ${SOURCE_DIR}

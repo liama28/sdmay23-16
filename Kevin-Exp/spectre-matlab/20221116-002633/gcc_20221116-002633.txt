@@ -1,20 +1,20 @@
-20221115-223429.c: In function ‘main’:
-20221115-223429.c:112:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+20221116-002633.c: In function ‘main’:
+20221116-002633.c:112:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
   112 |     printf("%15s \t %016p\n", "array1_size", &array1_size);
       |                         ^
-20221115-223429.c:114:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+20221116-002633.c:114:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
   114 |     printf("%15s \t %016p\n", "array1", array1);
       |                         ^
-20221115-223429.c:116:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+20221116-002633.c:116:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
   116 |     printf("%15s \t %016p\n", "array2", array2);
       |                         ^
-20221115-223429.c:117:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+20221116-002633.c:117:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
   117 |     printf("%15s \t %016p\n", "secret", secret);
       |                         ^
-20221115-223429.c:118:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+20221116-002633.c:118:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
   118 |     printf("%15s \t %016p\n", "malicious_x", (void *)malicious_x);
       |                         ^
-20221115-223429.c:132:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+20221116-002633.c:132:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
   132 |     printf("Reading at malicious_x = %d... ", (void * ) malicious_x);
       |                                      ~^       ~~~~~~~~~~~~~~~~~~~~~
       |                                       |       |
