@@ -1,8 +1,8 @@
-function []=graph_raw_power_data(arg1)
+%function []=graph_raw_power_data(arg1)
 
-cd ~/Desktop/Senior_Design/sdmay23-16/Liam_experiments/;
+%cd ~/Desktop/Senior_Design/sdmay23-16/Liam_experiments/;
 clc;
-fid = readmatrix(arg1);
+fid = readmatrix("");
 
 fid_new=diff(fid);
 
@@ -36,11 +36,5 @@ subplot(3,1,3)
 plot(fid_new);
 hold on
 title('Raw Data');
-% 
-% subplot(4,1,4)
-% plot(yy4);
-% hold on
-% title('1');
 
-
-end
+%end

