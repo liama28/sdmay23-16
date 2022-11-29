@@ -39,7 +39,7 @@ echo "PID: ${_pid}" >> ${NAME}/log_${NAME}.txt
 for ((i=1; i<=${RUNS}; i++));
 do
   echo "START ATTACK ${i}" $(date +"%H:%M:%S") >> ${NAME}/log_${NAME}.txt
-  ./${NAME}/${NAME}.o >> ${NAME}/log_${NAME}.txt
+  ./${NAME}/${NAME}.o >> ${NAME}/log_${NAME}.txt 
   echo "END ATTACK ${i}" $(date +"%H:%M:%S") >> ${NAME}/log_${NAME}.txt
   sleep ${WAIT_TIME}
 done
