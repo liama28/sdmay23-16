@@ -60,6 +60,7 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
           "nop\n\t"
           "nop\n\t"
           "nop\n\t"
+
           "nop\n\t"
           "nop\n\t"
           "nop\n\t"
@@ -70,6 +71,7 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
           "nop\n\t"
           "nop\n\t"
           "nop\n\t"
+
           "nop\n\t"
           "nop\n\t"
           "nop\n\t"
@@ -80,6 +82,7 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
           "nop\n\t"
           "nop\n\t"
           "nop\n\t"
+
           "nop\n\t"
           "nop\n\t"
           "nop\n\t"
@@ -89,6 +92,7 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
           "nop\n\t"
           "nop\n\t"
           "nop\n\t"
+
           "nop\n\t"
           "nop\n\t"
           "nop");

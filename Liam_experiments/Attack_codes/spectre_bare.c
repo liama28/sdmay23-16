@@ -102,11 +102,6 @@ int main(int argc,
 
   for (i = 0; i < sizeof(array2); i++)
     array2[i] = 1; /* write to array2 so in RAM not copy-on-write zero pages */
-  if (argc == 3) {
-    sscanf(argv[1], "%p", (void * * )( & malicious_x));
-    malicious_x -= (size_t) array1; /* Convert input value into a pointer */
-    sscanf(argv[2], "%d", & len);
-  }
 
   while (--len >= 0) {
     readMemoryByte(malicious_x++, value, score);
