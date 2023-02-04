@@ -32,7 +32,7 @@ def processMLData(numFiles, name):
 # Parse Arguments
 ########################################################################################################
 # -n <value>      Name that will be used for the data collected                   Default: *timestamp*
-# -r <value>      The number of times the attack will run                         Default: 4
+# -r <value>      The number of times the attack will run                         Default: 4 or 15
 # -w <value>      The amount of time in seconds to wait between each attack       Default: 1
 # -m              Runs power signature collection for the ML Model                Default: False
 ########################################################################################################
@@ -54,7 +54,7 @@ source_file = args.filename
 # Grab data for the machine learning model
 if(args.model == True):
     if(args.run == None): 
-        runs = 30
+        runs = 15
     command = "sh scp_helper.sh {0} {1} {2} {3} {4} 1".format(wd,source_file,name,runs,wait_time)
     os.system(command)
     processMLData(runs,name)
