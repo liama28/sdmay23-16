@@ -18,7 +18,7 @@ wait_time = 1
 # ARGUMENT 2: name          name of the directory that contains the data files
 ################################################################################################
 def processMLData(numFiles, name):
-    output_file = name+'/X_test_100.csv'
+    output_file = name+'/X_attack_test_15.csv'
     outfile = open(output_file, 'w', newline='')
     writer = csv.writer(outfile)
     for i in range(numFiles):

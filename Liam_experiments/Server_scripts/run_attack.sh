@@ -13,7 +13,7 @@ RUNS=$3
 # Time between runs (seconds)
 WAIT_TIME=$4
 
-cd /home/sdmay23-16/Liam_dir
+cd /home/sdmay23-16/testing_workspace
 
 if [ -d ${NAME} ]
 then
