@@ -39,17 +39,3 @@ ssh -l ${TL_USERNAME} ${TL_HOST} "mkdir ~/testing_workspace/${NAME}"
 scp $SOURCE_DIR$SOURCE_FILE ${TL_USERNAME}@${TL_HOST}:~/testing_workspace/${NAME}/$FILE_NAME
 ssh -l ${TL_USERNAME} ${TL_HOST} "sudo ~/testing_workspace/run_attack.sh ${FILE_NAME} ${NAME} ${RUNS} ${WAIT_TIME} ${TEST}"
 scp -r ${TL_USERNAME}@${TL_HOST}:~/testing_workspace/${NAME} ${SOURCE_DIR}
-
-
-# if [ $6 -eq 0 ]
-# then
-#     ssh -l ${TL_USERNAME} ${TL_HOST} "sudo ~/testing_workspace/run_attack.sh ${FILE_NAME} ${NAME} ${RUNS} ${WAIT_TIME} 0"
-#     scp -r ${TL_USERNAME}@${TL_HOST}:~/testing_workspace/${NAME} ${SOURCE_DIR}
-#     scp $SOURCE_DIR$NAME/X_attack_test_15.csv ${MLS_USERNAME}@${MLS_HOST}:~/testing_workspace/Data/
-#     ssh -l ${MLS_USERNAME} ${MLS_HOST} "cd testing_workspace/; source tensorflow/roy-venv/bin/activate; ./Restored_model_test.py >> results_${NAME}.txt; deactivate"
-#     scp ${MLS_USERNAME}@${MLS_HOST}:~/testing_workspace/results_${NAME}.txt ${SOURCE_DIR}/${NAME}/results.txt
-# # Simple test run
-# else
-#     ssh -l ${TL_USERNAME} ${TL_HOST} "sudo ~/testing_workspace/run_attack.sh ${FILE_NAME} ${NAME} ${RUNS} ${WAIT_TIME} 1"
-#     scp -r ${TL_USERNAME}@${TL_HOST}:~/testing_workspace/${NAME} ${SOURCE_DIR}
-# fi

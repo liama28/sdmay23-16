@@ -73,6 +73,6 @@ else:
         runs = 15
     os.system("sh ssh_helper.sh {0} {1} {2} {3} {4} 0".format(wd,source_file,name,runs,wait_time))
     processMLData(runs,name)
-    os.system("sh model_helper.sh {0} {1} {2} {3} {4} 0".format(wd,source_file,name,runs,wait_time))
+    os.system("sh model_helper.sh {0} {1}".format(wd,name))
     with open("{0}{1}/results.txt".format(wd,name), 'r') as f:
         print(f.read())

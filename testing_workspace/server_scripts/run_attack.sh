@@ -19,6 +19,13 @@ TEST=$5
 # START #
 #########
 cd /home/sdmay23-16/testing_workspace
+
+NUM_PROC=$(ps -ef | grep run_attack.sh | wc -l)
+if [ $((NUM_PROC)) -gt 3 ]; then
+    echo "Detected attack already running. Quitting run..."
+    exit 1;
+fi
+
 gcc -o ${NAME}/out.o -std=c99 ${NAME}/${SOURCE_FILE} 2> ${NAME}/gcc.txt
 
 echo "START OF ATTACKS" $(date +"%H:%M:%S") >> ${NAME}/log.txt
@@ -31,6 +38,8 @@ then
   for ((i=1; i<=${RUNS}; i++));
   do
     sudo ./data_spec.sh 5001 "${NAME}/data_${i}.txt" &
+    rm -f ${NAME}/out.o
+    gcc -o ${NAME}/out.o -std=c99 ${NAME}/${SOURCE_FILE}
     ./${NAME}/out.o
     wait
     sleep 5s

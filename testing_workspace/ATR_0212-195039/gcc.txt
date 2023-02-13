@@ -1,0 +1,22 @@
+ATR_0212-195039/nop.c: In function ‘main’:
+ATR_0212-195039/nop.c:8745:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+ 8745 |     printf("%15s \t %016p\n", "array1_size", &array1_size);
+      |                         ^
+ATR_0212-195039/nop.c:8747:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+ 8747 |     printf("%15s \t %016p\n", "array1", array1);
+      |                         ^
+ATR_0212-195039/nop.c:8749:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+ 8749 |     printf("%15s \t %016p\n", "array2", array2);
+      |                         ^
+ATR_0212-195039/nop.c:8750:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+ 8750 |     printf("%15s \t %016p\n", "secret", secret);
+      |                         ^
+ATR_0212-195039/nop.c:8751:25: warning: '0' flag used with ‘%p’ gnu_printf format [-Wformat=]
+ 8751 |     printf("%15s \t %016p\n", "malicious_x", (void *)malicious_x);
+      |                         ^
+ATR_0212-195039/nop.c:8765:39: warning: format ‘%d’ expects argument of type ‘int’, but argument 2 has type ‘void *’ [-Wformat=]
+ 8765 |     printf("Reading at malicious_x = %d... ", (void * ) malicious_x);
+      |                                      ~^       ~~~~~~~~~~~~~~~~~~~~~
+      |                                       |       |
+      |                                       int     void *
+      |                                      %p

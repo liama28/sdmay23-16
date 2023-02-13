@@ -6,16 +6,9 @@
 #############
 # Working directory / source directory
 SOURCE_DIR=$1
-# Source file for the attack. Relative to the source directory
-SOURCE_FILE=$2
 # Name of the attack test run
-NAME=$3
-# Number of times to run the attack
-RUNS=$4
-# Wait time between each attack for simple attack runs
-WAIT_TIME=$5
-# 0 or 1. 0 = Collect data for the ML model. 1 = run a simple attack
-TEST=$6
+NAME=$2
+
 
 # ssh info for the remote test laptop
 TL_USERNAME=sdmay23-16
