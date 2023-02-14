@@ -1,14 +1,15 @@
 function []=Graph_data(arg1)
 
-cd ~/Desktop/Senior_Design/sdmay23-16/attack_testing_workspace/;
+cd ~/Desktop/Senior_Design/sdmay23-16/testing_workspace/;
 clc;
 fid = readmatrix(arg1);
 
 fid_new=diff(fid);
+M = mean(fid_new);
 
 for i = 1 : length(fid_new)
-    if (fid_new(i) > 10000)
-        fid_new(i) = mean(fid_new);
+    if (fid_new(i) > 20000)
+        fid_new(i) = M;
     end
 end
 
@@ -22,17 +23,17 @@ yy5 = smoothdata(fid_new,'rlowess',250); % I like this one
 
 
 
-subplot(3,1,1)
+subplot(2,1,1)
 plot(yy4);
 hold on
 title('Smoothed Data');
 
-subplot(3,1,2)
-plot(yy5);
-hold on
-title('Simple Data');
+% subplot(3,1,2)
+% plot(yy5);
+% hold on
+% title('Simple Data');
 
-subplot(3,1,3)
+subplot(2,1,2)
 plot(fid_new);
 hold on
 title('Raw Data');
