@@ -10,23 +10,6 @@ from PyQt6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDateTimeEdit,
                              QStyleFactory, QTableWidget, QTabWidget,
                              QTextEdit, QVBoxLayout, QWidget)
 
-##################
-# # Default values #
-##################
-# Working directory. Where the script is located
-results_dir= "/Users/felipebautista/Programing_Workspaces/GUI/Tmp"
-# The attack name
-name = "ATR_{}".format(time.strftime("%m%d-%H%M%S"))
-
-# For test run "-t"
-# Number of times the attack will run
-runs = 4
-# The wait time between runs
-wait_time = 1
-Test_mode = True
-Test_run = None
-
-
 
 class UI(QDialog):
 
@@ -176,12 +159,28 @@ class UI(QDialog):
 
         ################################################################################################
         def run_attack():
-            #########
-            # START #
-            #########
+            
+            ###################
+            # Necessary Paths #
+            ###################
+            ssh_helper = os.getcwd() + "/Scripts/ssh_helper.sh"
+            results_dir= os.getcwd() + "/Tmp"
+            
+            
+            # The attack name
+            name = "ATR_{}".format(time.strftime("%m%d-%H%M%S"))
+
+            # For test run "-t"
+            # Number of times the attack will run
+            runs = 4
+            # The wait time between runs
+            wait_time = 1
+            Test_mode = True
+            Test_run = None
+            
             # Simply runs the attack (runs) amount of times with (wait_time) sleep between each attack
             if(Test_mode == True):
-                os.system("sh /Users/felipebautista/Programing_Workspaces/GUI/Scripts/ssh_helper.sh {0} {1} {2} {3} {4} 1".format(results_dir,os.path.abspath(source_file),name,runs,wait_time))
+                os.system("sh " + ssh_helper +" {0} {1} {2} {3} {4} 1".format(results_dir,os.path.abspath(source_file),name,runs,wait_time))
             
 
             # Runs the attack 15 times with 5001 data points collected for each atttac and 5s sleep between each run
