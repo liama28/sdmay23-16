@@ -148,7 +148,7 @@ class UI(QDialog):
 
         def run_attack():
             ssh_helper = os.getcwd() + "/Scripts/ssh_helper.sh"
-            results_dir= os.getcwd() + "/Tmp/Spectre"
+            results_dir= os.getcwd() + "/Results/Spectre"
             name = self.attack_type + "_Attack_{}".format(time.strftime("%m%d-%H%M%S"))
             runs = runs_Input.text()
             wait_time = Wait_Time_Input.text()
@@ -172,7 +172,7 @@ class UI(QDialog):
                 #os.system("sh model_helper.sh {0} {1} {2} {3} {4} 0".format(wd,source_file,name,runs,wait_time))
         
             #Set all the widgets Ready for the next Attack        
-            self.result_dir = os.getcwd() + "/Tmp/Spectre/" + name + "/log.txt" 
+            self.result_dir = os.getcwd() + "/Results/Spectre/" + name + "/log.txt" 
             self.results_button.setDisabled(False)
             self.bottomRightGroupBox.setDisabled(True)
             self.attack_type_dropbox.setCurrentIndex(0)
