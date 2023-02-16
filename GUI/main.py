@@ -1,23 +1,23 @@
-import os
-import sys
-import csv,time
+import os, sys, csv,time,results
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDateTimeEdit,
-                             QDial, QDialog, QFileDialog, QGridLayout,
-                             QGroupBox, QHBoxLayout, QLabel, QLineEdit,
-                             QProgressBar, QPushButton, QRadioButton,
-                             QScrollBar, QSizePolicy, QSlider, QSpinBox,
-                             QStyleFactory, QTableWidget, QTabWidget,
-                             QTextEdit, QVBoxLayout, QWidget)
+from PyQt6.QtGui import *
+from PyQt6.QtWidgets import *
 
 
 class UI(QDialog):
 
     def __init__(self, parent=None):
         super(UI, self).__init__(parent)
+        self.source = "Empty"
+        self.result_dir = "Empty"
+        self.init_UI()
 
+    def init_UI(self):
+
+    
         self.labels = [QLabel(self) for _ in range(7)]
         self.originalPalette = QApplication.palette()
+        
 
         styleComboBox = QComboBox()
         styleComboBox.addItems(QStyleFactory.keys())
@@ -26,7 +26,7 @@ class UI(QDialog):
         styleLabel.setBuddy(styleComboBox)
 
         self.useStylePaletteCheckBox = QCheckBox("&Use style's standard palette")
-        self.useStylePaletteCheckBox.setChecked(False)
+        self.useStylePaletteCheckBox.setChecked(True)
 
         disableWidgetsCheckBox = QCheckBox("&Disable widgets")
 
@@ -40,6 +40,12 @@ class UI(QDialog):
         disableWidgetsCheckBox.toggled.connect(self.topLeftGroupBox.setDisabled)
         disableWidgetsCheckBox.toggled.connect(self.topRightGroupBox.setDisabled)
         disableWidgetsCheckBox.toggled.connect(self.bottomRightGroupBox.setDisabled)
+        
+        
+        self.results_button = QPushButton("Results")
+        self.results_button.clicked.connect(self.open_attack_results)
+        self.results_button.setDisabled(True)
+
 
         topLayout = QHBoxLayout()
         topLayout.addWidget(styleLabel)
@@ -47,6 +53,7 @@ class UI(QDialog):
         topLayout.addStretch(1)
         topLayout.addWidget(self.useStylePaletteCheckBox)
         topLayout.addWidget(disableWidgetsCheckBox)
+        topLayout.addWidget(self.results_button)
 
         mainLayout = QGridLayout()
         mainLayout.addLayout(topLayout, 0, 0, 1, 2)
@@ -59,9 +66,14 @@ class UI(QDialog):
         self.setLayout(mainLayout)
 
         self.setWindowTitle("UI")
-        self.changeStyle('Windows')
+        self.changeStyle('macOS')
+    
 
-
+    def open_attack_results(self):
+        self.w = results.Results(self.result_dir)
+        self.w.show()
+        self.results_button.setDisabled(True)
+    
 
     def changeStyle(self, styleName):
         QApplication.setStyle(QStyleFactory.create(styleName))
@@ -108,32 +120,66 @@ class UI(QDialog):
     
         def get_file():
             dialog = QFileDialog()
-            global source_file
             if dialog.exec():
                 files = dialog.selectedFiles()
-                source_file = files[0]
-                file_selected.setText(os.path.basename(source_file))
-                #textEditor.setPlainText(os.path.abspath(source_file))
+                self.source = files[0]
+                file_selected.setText(os.path.basename(self.source))
 
         upload_source_button = QPushButton('Upload')
         upload_source_button.clicked.connect(get_file)
-        source_code_label = QLabel("Attack Source Code")
+        upload_source_button.setStyleSheet(
+            "background-color: #D2042D;" +
+            "border-style: outset;" +
+            "border-width: 1px;" +
+            "border-radius: 10px; " +
+            "border-color: black;" + 
+            "font: bold 11px;" +
+            "min-width: 10em;padding: 6px")
+
+        source_code_label = QLabel("Attack Source Code File")
         source_code_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         file_selected = QLabel("No file selected")
         file_selected.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         layout = QVBoxLayout()
         layout.addWidget(source_code_label)
-        layout.addWidget(upload_source_button)
         layout.addWidget(file_selected)
-        layout.addStretch(1)
+        layout.addWidget(upload_source_button)
         self.topRightGroupBox.setLayout(layout)
 
-    
-
-        
     def createBottomRightGroupBox(self):
         self.bottomRightGroupBox = QGroupBox()
+
+        def run_attack():
+            ssh_helper = os.getcwd() + "/Scripts/ssh_helper.sh"
+            results_dir= os.getcwd() + "/Tmp"
+            name = "ATR_{}".format(time.strftime("%m%d-%H%M%S"))
+            runs = runs_Input.text()
+            wait_time = Wait_Time_Input.text()
+            Test_mode = False
+            Test_run = None
+            
+            # Simply runs the attack (runs) amount of times with (wait_time) sleep between each attack
+            if(Test_mode == True):
+                if (runs == "" and wait_time == ""):
+                    os.system("sh " + ssh_helper +" {0} {1} {2} {3} {4} 1".format(results_dir,os.path.abspath(self.source),name,4,1))
+                else:
+                    os.system("sh " + ssh_helper +" {0} {1} {2} {3} {4} 1".format(results_dir,os.path.abspath(self.source),name,runs,wait_time))
+
+    
+            # Runs the attack 15 times with 5001 data points collected for each atttac and 5s sleep between each run
+            
+            else:
+                if(Test_run == None): 
+                    runs = 15
+                os.system("sh " + ssh_helper + " {0} {1} {2} {3} {4} 0".format(results_dir,os.path.abspath(self.source),name,runs,1))
+                processMLData(runs,name, results_dir)
+                #os.system("sh model_helper.sh {0} {1} {2} {3} {4} 0".format(wd,source_file,name,runs,wait_time))
+        
+                    
+
+            self.result_dir = os.getcwd() + "/Tmp/" + name + "/log.txt" 
+            self.results_button.setDisabled(False)
         
         ################################################################################################
         # Takes each data file, finds the difference (data[i+1]-data[i]), and puts them in a single csv
@@ -142,12 +188,12 @@ class UI(QDialog):
         # ARGUEMTN 1: numFiles      number of "data_#" power signature data files to process
         # ARGUMENT 2: name          name of the directory that contains the data files
         ################################################################################################
-        def processMLData(numFiles, name):
-            output_file = name+'/X_test_100.csv'
-            outfile = open(output_file, 'w', newline='')
+        def processMLData(numFiles, name, dir):
+            output_file = dir + "/" + name + '/X_test_100.csv'
+            outfile = open(output_file, 'w+', newline = '')
             writer = csv.writer(outfile)
             for i in range(numFiles):
-                file = "{0}/data_{1}.txt".format(name,i+1)
+                file = "{0}/{1}/data_{2}.txt".format(dir,name,i+1)
                 with open(file, 'r') as f1:
                     data1 = list(csv.reader(f1))
                 diff = [int(data1[i+1][0])-int(data1[i][0]) for i in range(len(data1)-1)]
@@ -158,62 +204,49 @@ class UI(QDialog):
         # Needed by the Trained Model.
 
         ################################################################################################
-        def run_attack():
+        
             
-            ###################
-            # Necessary Paths #
-            ###################
-            ssh_helper = os.getcwd() + "/Scripts/ssh_helper.sh"
-            results_dir= os.getcwd() + "/Tmp"
-            
-            
-            # The attack name
-            name = "ATR_{}".format(time.strftime("%m%d-%H%M%S"))
-
-            # For test run "-t"
-            # Number of times the attack will run
-            runs = 4
-            # The wait time between runs
-            wait_time = 1
-            Test_mode = True
-            Test_run = None
-            
-            # Simply runs the attack (runs) amount of times with (wait_time) sleep between each attack
-            if(Test_mode == True):
-                os.system("sh " + ssh_helper +" {0} {1} {2} {3} {4} 1".format(results_dir,os.path.abspath(source_file),name,runs,wait_time))
-            
-
-            # Runs the attack 15 times with 5001 data points collected for each atttac and 5s sleep between each run
-            
-           # else:
-                #if(Test_run == None): 
-                  #  runs = 15
-                #os.system("sh ssh_helper.sh {0} {1} {2} {3} {4} 0".format(wd,source_file,name,runs,wait_time))
-               # processMLData(runs,name)
-               # os.system("sh model_helper.sh {0} {1} {2} {3} {4} 0".format(wd,source_file,name,runs,wait_time))
-                #with open("{0}{1}/results.txt".format(wd,name), 'r') as f:
-                  #  print(f.read())
-
-            #textEditor.setPlainText(run)
-            
-            
-        run = QPushButton("Run Attack")
-        run.clicked.connect(run_attack)
-        run_status = QLabel("Press to run Attack")
-        run_status.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        layout = QVBoxLayout()
-        layout.addWidget(run)
-        layout.addWidget(run_status)
-        layout.addStretch(1)
-        self.bottomRightGroupBox.setLayout(layout)
-    
-
+        # Widget Defined # 
+        run_button = QPushButton("Run Attack")
+        run_button.clicked.connect(run_attack)
+        run_button.setStyleSheet(
+            "background-color: #D2042D;" +
+            "border-style: outset;" +
+            "border-width: 1px;" +
+            "border-radius: 10px; " +
+            "border-color: black;" + 
+            "font: bold 11px;" +
+            "min-width: 10em;padding: 6px")
         
 
+
+        Wait_Time_Label = QLabel("Wait Time Between Runs")
+        Wait_Time_Input = QLineEdit()
+        
+        Runs_Label = QLabel("Number of Runs")
+        runs_Input = QLineEdit()
+
+        # Widget Alignments #
+        Runs_Label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        Wait_Time_Label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        runs_Input.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        Wait_Time_Input.setAlignment(Qt.AlignmentFlag.AlignLeft)
+
+        # Layout Formatting
+        layout = QVBoxLayout()
+        layout.addWidget(Runs_Label)
+        layout.addWidget(runs_Input)
+        layout.addWidget(Wait_Time_Label)
+        layout.addWidget(Wait_Time_Input)
+        layout.addWidget(run_button)
+        layout.addStretch(1)
+        self.bottomRightGroupBox.setLayout(layout)
+
+        
+    
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
-    gallery = UI()
-    gallery.show()
+    GUI = UI()
+    GUI.show()
     sys.exit(app.exec())
