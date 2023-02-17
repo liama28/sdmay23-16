@@ -11,6 +11,7 @@ class UI(QDialog):
         self.source = "None"
         self.result_dir = "None"
         self.attack_type = "None"
+        self.attack_name = "None"
         self.init_UI()
 
     def init_UI(self):
@@ -64,7 +65,7 @@ class UI(QDialog):
     
 
     def open_attack_results(self):
-        self.w = results.Results(self.result_dir)
+        self.w = results.Results(self.result_dir, self.attack_name)
         self.w.show()
         self.results_button.setDisabled(True)
     
@@ -148,31 +149,32 @@ class UI(QDialog):
 
         def run_attack():
             ssh_helper = os.getcwd() + "/Scripts/ssh_helper.sh"
-            results_dir= os.getcwd() + "/Results/Spectre"
-            name = self.attack_type + "_Attack_{}".format(time.strftime("%m%d-%H%M%S"))
+            model_helper = os.getcwd() + "/Scripts/model_helper.sh"
+            results_dir = os.getcwd() + "/Results/Spectre"
+            self.attack_name = self.attack_type + "_Attack_{}".format(time.strftime("%m%d-%H%M%S"))
             runs = runs_Input.text()
             wait_time = Wait_Time_Input.text()
-            Test_mode = True
+            Test_mode = False
             Test_run = None
             
             # Simply runs the attack (runs) amount of times with (wait_time) sleep between each attack
             if(Test_mode == True):
                 if (runs == "" and wait_time == ""):
-                    os.system("sh " + ssh_helper +" {0} {1} {2} {3} {4} 1".format(results_dir,os.path.abspath(self.source),name,4,1))
+                    os.system("sh " + ssh_helper +" {0} {1} {2} {3} {4} 1".format(results_dir,os.path.abspath(self.source),self.attack_name,4,1))
                 else:
-                    os.system("sh " + ssh_helper +" {0} {1} {2} {3} {4} 1".format(results_dir,os.path.abspath(self.source),name,runs,wait_time))
+                    os.system("sh " + ssh_helper +" {0} {1} {2} {3} {4} 1".format(results_dir,os.path.abspath(self.source),self.attack_name,runs,wait_time))
 
             # Runs the attack 15 times with 5001 data points collected for each atttac and 5s sleep between each run
             
             else:
                 if(Test_run == None): 
                     runs = 15
-                os.system("sh " + ssh_helper + " {0} {1} {2} {3} {4} 0".format(results_dir,os.path.abspath(self.source),name,runs,1))
-                processMLData(runs,name, results_dir)
-                #os.system("sh model_helper.sh {0} {1} {2} {3} {4} 0".format(wd,source_file,name,runs,wait_time))
+                os.system("sh " + ssh_helper + " {0} {1} {2} {3} {4} 0".format(results_dir,os.path.abspath(self.source),self.attack_name,runs,1))
+                processMLData(runs,self.attack_name, results_dir)
+                os.system("sh " + model_helper + " {0} {1} {2} {3} {4} 0".format(results_dir,os.path.abspath(self.source),self.attack_name,runs,1))
         
             #Set all the widgets Ready for the next Attack        
-            self.result_dir = os.getcwd() + "/Results/Spectre/" + name + "/log.txt" 
+            self.result_dir = os.getcwd() + "/Results/Spectre/" + self.attack_name + "/results.txt" 
             self.results_button.setDisabled(False)
             self.bottomRightGroupBox.setDisabled(True)
             self.attack_type_dropbox.setCurrentIndex(0)
@@ -189,7 +191,7 @@ class UI(QDialog):
         ################################################################################################
         
         def processMLData(numFiles, name, dir):
-            output_file = dir + "/" + name + '/X_test_100.csv'
+            output_file = dir + "/" + name + '/X_attack_test_15.csv'
             outfile = open(output_file, 'w+', newline = '')
             writer = csv.writer(outfile)
             for i in range(numFiles):
