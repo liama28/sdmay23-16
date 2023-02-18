@@ -40,7 +40,7 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
   size_t training_x, x;
   register uint64_t time1, time2;
   volatile uint8_t * addr;
-  usleep(200000);
+  usleep(100000); // 100k-200k
   for (i = 0; i < 256; i++)
     results[i] = 0;
   for (tries = 999; tries > 0; tries--) {

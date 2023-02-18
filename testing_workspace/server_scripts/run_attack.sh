@@ -21,7 +21,7 @@ TEST=$5
 cd /home/sdmay23-16/testing_workspace
 
 NUM_PROC=$(ps -ef | grep run_attack.sh | wc -l)
-if [ $((NUM_PROC)) -gt 3 ]; then
+if [ $((NUM_PROC)) -gt 4 ]; then
     echo "Detected attack already running. Quitting run..."
     exit 1;
 fi

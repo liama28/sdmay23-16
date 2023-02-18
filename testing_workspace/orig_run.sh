@@ -4,7 +4,7 @@ SOURCE_DIR=$1
 SOURCE_FILE=$2
 
 USERNAME=sdmay23-16
-HOST=10.26.48.7
+HOST=10.26.55.93
 
 cd ${SOURCE_DIR}
 rm spectre_data_test.txt

@@ -64,8 +64,7 @@ source_file = args.filename
 # Simply runs the attack (runs) amount of times with (wait_time) sleep between each attack
 if(args.test == True):
     os.system("sh ssh_helper.sh {0} {1} {2} {3} {4} 1".format(wd,source_file,name,runs,wait_time))
-    data_file = name + "/" + "data.txt"
-    print("DATA FILE: {0}".format(data_file))
+    print("DATA FILE: {0}/data.txt".format(name))
 
 # Runs the attack 15 times with 5001 data points collected for each atttac and 5s sleep between each run
 else:
@@ -76,3 +75,5 @@ else:
     os.system("sh model_helper.sh {0} {1}".format(wd,name))
     with open("{0}{1}/results.txt".format(wd,name), 'r') as f:
         print(f.read())
+    print("DATA File: {0}/X_attack_test_15.csv".format(name))
+
