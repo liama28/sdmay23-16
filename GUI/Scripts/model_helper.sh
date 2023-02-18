@@ -30,6 +30,6 @@ MLS_HOST=berk.ece.iastate.edu
 #########
 
 cd ${SOURCE_DIR}
-scp $SOURCE_DIR$NAME/X_attack_test_15.csv ${MLS_USERNAME}@${MLS_HOST}:~/testing_workspace/Data/
+scp $SOURCE_DIR/$NAME/X_attack_test_15.csv ${MLS_USERNAME}@${MLS_HOST}:~/testing_workspace/Data/
 ssh -l ${MLS_USERNAME} ${MLS_HOST} "cd testing_workspace/; source tensorflow/roy-venv/bin/activate; ./Restored_model_test.py >> results_${NAME}.txt; deactivate"
 scp ${MLS_USERNAME}@${MLS_HOST}:~/testing_workspace/results_${NAME}.txt ${SOURCE_DIR}/${NAME}/results.txt
