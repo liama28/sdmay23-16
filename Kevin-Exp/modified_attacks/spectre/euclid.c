@@ -44,21 +44,24 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2])
     register uint64_t time1, time2;
     volatile uint8_t *addr;
     int result;
-    int a = rand();
-    int b = rand();
     // GCD
-    __asm__ __volatile__("movl %1, %%eax;"
-                         "movl %2, %%ebx;"
-                         "CONTD: cmpl $0, %%ebx;"
-                         "je DONE;"
-                         "xorl %%edx, %%edx;"
-                         "idivl %%ebx;"
-                         "movl %%ebx, %%eax;"
-                         "movl %%edx, %%ebx;"
-                         "jmp CONTD;"
-                         "DONE: movl %%eax, %0;"
-                         : "=g"(result)
-                         : "g"(a), "g"(b));
+    for (i = 0; i < 500000; i++)
+    {
+        int a = rand();
+        int b = rand();
+        __asm__ __volatile__("movl %1, %%eax;"
+                             "movl %2, %%ebx;"
+                             "CONTD: cmpl $0, %%ebx;"
+                             "je DONE;"
+                             "xorl %%edx, %%edx;"
+                             "idivl %%ebx;"
+                             "movl %%ebx, %%eax;"
+                             "movl %%edx, %%ebx;"
+                             "jmp CONTD;"
+                             "DONE: movl %%eax, %0;"
+                             : "=g"(result)
+                             : "g"(a), "g"(b));
+    }
 
     for (i = 0; i < 256; i++)
         results[i] = 0;
