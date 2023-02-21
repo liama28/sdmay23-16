@@ -1,10 +1,7 @@
-import os
-import sys
-import csv,time
+
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
-from PyQt6.QtWidgets import QToolBar
 
 class Results(QWidget):
     
