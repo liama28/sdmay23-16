@@ -1,5 +1,6 @@
 #!/bin/bash
 #sh scp_helper.sh ~/Desktop/Senior_Design/sdmay23-16/Liam_experiments/ Source_test.c testrun3423 3 1
+source ipaddr.cfg
 
 #############
 # ARGUMENTS #
@@ -19,7 +20,7 @@ TEST=$6
 
 # ssh info for the remote test laptop
 TL_USERNAME=sdmay23-16
-TL_HOST=10.26.55.73
+TL_HOST=$IPADDR
 
 # ssh info for the ML server
 MLS_USERNAME=sdmay23_16
@@ -43,4 +44,3 @@ scp $SOURCE_FILE ${TL_USERNAME}@${TL_HOST}:~/testing_workspace/${NAME}/$FILE_NAM
 ssh -l ${TL_USERNAME} ${TL_HOST} "sudo ~/testing_workspace/run_attack.sh ${FILE_NAME} ${NAME} ${RUNS} ${WAIT_TIME} ${TEST}"
 #Copy the results back on the host machine
 scp -r ${TL_USERNAME}@${TL_HOST}:~/testing_workspace/${NAME} ${SOURCE_DIR}
-
