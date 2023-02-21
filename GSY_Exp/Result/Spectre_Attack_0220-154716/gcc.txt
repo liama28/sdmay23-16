@@ -1,0 +1,21 @@
+Spectre_Attack_0220-154716/sleep1.c: In function ‘readMemoryByte’:
+Spectre_Attack_0220-154716/sleep1.c:65:23: error: storage size of ‘req’ isn’t known
+   65 |       struct timespec req, rem = {1,500};
+      |                       ^~~
+Spectre_Attack_0220-154716/sleep1.c:65:14: error: variable ‘rem’ has initializer but incomplete type
+   65 |       struct timespec req, rem = {1,500};
+      |              ^~~~~~~~
+Spectre_Attack_0220-154716/sleep1.c:65:35: warning: excess elements in struct initializer
+   65 |       struct timespec req, rem = {1,500};
+      |                                   ^
+Spectre_Attack_0220-154716/sleep1.c:65:35: note: (near initialization for ‘rem’)
+Spectre_Attack_0220-154716/sleep1.c:65:37: warning: excess elements in struct initializer
+   65 |       struct timespec req, rem = {1,500};
+      |                                     ^~~
+Spectre_Attack_0220-154716/sleep1.c:65:37: note: (near initialization for ‘rem’)
+Spectre_Attack_0220-154716/sleep1.c:65:28: error: storage size of ‘rem’ isn’t known
+   65 |       struct timespec req, rem = {1,500};
+      |                            ^~~
+Spectre_Attack_0220-154716/sleep1.c:66:7: warning: implicit declaration of function ‘nanosleep’ [-Wimplicit-function-declaration]
+   66 |       nanosleep(&req,&rem);
+      |       ^~~~~~~~~
