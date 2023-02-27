@@ -48,6 +48,7 @@ parser.add_argument('filename')
 parser.add_argument('-n', '--name')
 parser.add_argument('-r', '--run')
 parser.add_argument('-w','--wait')
+parser.add_argument('-s', '--skip', action='store_true')
 parser.add_argument('-t', '--test', action='store_true')
 args = parser.parse_args()
 if(args.name != None): 
@@ -72,8 +73,9 @@ else:
         runs = 15
     os.system("sh ssh_helper.sh {0} {1} {2} {3} {4} 0".format(wd,source_file,name,runs,wait_time))
     processMLData(runs,name)
-    os.system("sh model_helper.sh {0} {1}".format(wd,name))
-    with open("{0}{1}/results.txt".format(wd,name), 'r') as f:
-        print(f.read())
+    if not args.skip:
+        os.system("sh model_helper.sh {0} {1}".format(wd,name))
+        with open("{0}{1}/results.txt".format(wd,name), 'r') as f:
+            print(f.read())
     print("DATA File: {0}/X_attack_test_15.csv".format(name))
 

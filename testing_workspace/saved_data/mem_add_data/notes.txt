@@ -1,0 +1,1 @@
+It takes 5.6 times longer to perform the add instructions when accessing a value in memory

@@ -1,0 +1,15 @@
+ATR_0226-195541/add.c: In function ‘main’:
+ATR_0226-195541/add.c:7:3: warning: implicit declaration of function ‘asm’ [-Wimplicit-function-declaration]
+    7 |   asm (
+      |   ^~~
+ATR_0226-195541/add.c:9:26: error: expected ‘)’ before ‘:’ token
+    9 |       "mov $2, %%ebx\n\t"                 // load 2 into ebx
+      |                          ^
+      |                          )
+......
+   18 |       :                               // Outputs
+      |       ~                   
+ATR_0226-195541/add.c:22:5: warning: implicit declaration of function ‘usleep’; did you mean ‘sleep’? [-Wimplicit-function-declaration]
+   22 |     usleep(100000);                   // 0.1 s
+      |     ^~~~~~
+      |     sleep

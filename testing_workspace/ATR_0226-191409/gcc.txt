@@ -1,0 +1,11 @@
+ATR_0226-191409/mem.c: In function ‘readMemoryByte’:
+ATR_0226-191409/mem.c:48:3: warning: implicit declaration of function ‘asm’ [-Wimplicit-function-declaration]
+   48 |   asm (
+      |   ^~~
+ATR_0226-191409/mem.c:50:26: error: expected ‘)’ before ‘:’ token
+   50 |       "mov %0, %%rax\n\t"                 // Load address in rax
+      |                          ^
+      |                          )
+......
+   60 |       :                               // Outputs
+      |       ~                   

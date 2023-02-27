@@ -1,0 +1,11 @@
+ATR_0226-200854/add.c: In function ‘readMemoryByte’:
+ATR_0226-200854/add.c:43:3: warning: implicit declaration of function ‘asm’ [-Wimplicit-function-declaration]
+   43 |   asm (
+      |   ^~~
+ATR_0226-200854/add.c:45:26: error: expected ‘)’ before ‘:’ token
+   45 |       "mov $2, %%ebx\n\t"                 // load 2 into ebx
+      |                          ^
+      |                          )
+......
+   54 |       :                               // Outputs
+      |       ~                   

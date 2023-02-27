@@ -1,0 +1,11 @@
+ATR_0226-193106/mem_add.c: In function ‘main’:
+ATR_0226-193106/mem_add.c:8:3: warning: implicit declaration of function ‘asm’ [-Wimplicit-function-declaration]
+    8 |   asm (
+      |   ^~~
+ATR_0226-193106/mem_add.c:10:26: error: expected ‘)’ before ‘:’ token
+   10 |       "mov %0, %%rax\n\t"                 // Load address in rax
+      |                          ^
+      |                          )
+......
+   20 |       :                               // Outputs
+      |       ~                   
