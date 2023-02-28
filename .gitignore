@@ -84,3 +84,6 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# VSCODE Stuff
+.vscode/
