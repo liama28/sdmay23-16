@@ -1,5 +1,6 @@
 #!/bin/bash
 #sh scp_helper.sh ~/Desktop/Senior_Design/sdmay23-16/Liam_experiments/ Source_test.c testrun3423 3 1
+. ./ipaddr.cfg
 
 #############
 # ARGUMENTS #
@@ -12,7 +13,7 @@ NAME=$2
 
 # ssh info for the remote test laptop
 TL_USERNAME=sdmay23-16
-TL_HOST=10.26.55.73
+TL_HOST=$IPADDR
 
 # ssh info for the ML server
 MLS_USERNAME=sdmay23_16

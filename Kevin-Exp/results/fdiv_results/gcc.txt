@@ -1,0 +1,11 @@
+ATR_0228-141928/fdiv.c: In function ‘readMemoryByte’:
+ATR_0228-141928/fdiv.c:53:5: warning: implicit declaration of function ‘asm’ [-Wimplicit-function-declaration]
+   53 |     asm(
+      |     ^~~
+ATR_0228-141928/fdiv.c:54:20: error: expected ‘)’ before ‘:’ token
+   54 |         ".rept 30;"
+      |                    ^
+      |                    )
+......
+   59 |         : "=m"(result_div)
+      |         ~           
