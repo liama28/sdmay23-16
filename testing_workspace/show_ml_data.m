@@ -1,6 +1,6 @@
 function []=show_ml_data(arg1)
 
-cd ~/Desktop/Senior_Design/sdmay23-16/testing_workspace/;
+%cd ~/Desktop/Senior_Design/sdmay23-16/testing_workspace/;
 clc;
 f = readmatrix(arg1);
 mean_val = mean(f, "all");
@@ -18,4 +18,4 @@ plot(M);
 hold on
 title('Mean Data');
 
-end
+%end

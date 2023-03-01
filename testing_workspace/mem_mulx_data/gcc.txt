@@ -1,0 +1,5 @@
+mem_mulx_data/mem_mulx.c: In function ‘main’:
+mem_mulx_data/mem_mulx.c:32:5: warning: implicit declaration of function ‘usleep’; did you mean ‘sleep’? [-Wimplicit-function-declaration]
+   32 |     usleep(200000);
+      |     ^~~~~~
+      |     sleep

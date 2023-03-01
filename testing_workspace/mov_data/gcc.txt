@@ -1,0 +1,5 @@
+mov_data/mov.c: In function ‘main’:
+mov_data/mov.c:25:5: warning: implicit declaration of function ‘usleep’; did you mean ‘sleep’? [-Wimplicit-function-declaration]
+   25 |     usleep(200000);
+      |     ^~~~~~
+      |     sleep

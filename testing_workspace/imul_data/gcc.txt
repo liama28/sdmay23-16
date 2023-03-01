@@ -1,0 +1,5 @@
+imul_data/imul.c: In function ‘main’:
+imul_data/imul.c:28:5: warning: implicit declaration of function ‘usleep’; did you mean ‘sleep’? [-Wimplicit-function-declaration]
+   28 |     usleep(200000);
+      |     ^~~~~~
+      |     sleep

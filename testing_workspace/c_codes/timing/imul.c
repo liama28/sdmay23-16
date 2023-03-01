@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int main(int argc, const char * * argv) {
-  for(int i = 0; i < 5; i++) {                
-      __asm__ (
+int main(int argc, const char **argv)
+{
+    __asm__ (
       //".intel_syntax noprefix\n\t"          // switch to Intel syntax
-      "mov $401498, %%ecx\n\t"                 // Number of loops
+      "mov $1875000, %%ecx\n\t"                 // Number of loops
       "loop1:\n\t"                            // Start of loop           
         ".rept 300\n\t"                           // 60 is the max value
           "mov $0x0000000003FCE23A,%%r8\n\t"
@@ -25,7 +25,6 @@ int main(int argc, const char * * argv) {
       :                               // Inputs
       : "ecx", "r8"           // clobbered registers
     );
-    usleep(200000); 
-  }
+    //usleep(100000);
   return (0);
 }
