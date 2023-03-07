@@ -48,7 +48,7 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2])
     srand(time(0));
     float result;
 
-    for (i = 0; i < 100; i++)
+    for (i = 0; i < 100000; i++)
     {
         float num1 = (float)(rand()) / (float)(rand());
         float num2 = (float)(rand()) / (float)(rand());
