@@ -39,18 +39,35 @@ then
   do
     sudo ./data_spec.sh 5001 "${NAME}/data_${i}.txt" &
     rm -f ${NAME}/out.o
-    gcc -o ${NAME}/out.o -std=c99 ${NAME}/${SOURCE_FILE}
+    #gcc -o ${NAME}/out.o -std=c99 ${NAME}/${SOURCE_FILE}
+    gcc -o ${NAME}/out.o ${NAME}/${SOURCE_FILE}
     ./${NAME}/out.o
     wait
-    sleep 5s
+    sleep 2s
     echo "${i}"
   done
+#############
+# Profiling #
+#############
+
+elif [$5 -eq 2]; then
+  sudo ./data_kill.sh ${NAME} &
+  sleep ${WAIT_TIME}
+  _pid=$(ps --ppid $! -o pid=)
+  for ((i=1; i<=${RUNS}; i++));
+  do
+    sudo kill -SIGUSR1 ${_pid}
+    ./${NAME}/out.o >> ${NAME}/time.txt
+    sudo kill -SIGUSR1 ${_pid}
+    sleep ${WAIT_TIME}
+  done
+  sudo kill -SIGINT ${_pid}
 
 #####################
 # Simple attack run #
 #####################
 else
-  sudo ./data_kill.sh >> "${NAME}/data.txt" &
+  sudo ./data_kill.sh ${NAME} &
   sleep 1
   _pid=$(ps --ppid $! -o pid=)
   #./clock_speed.sh >> "${NAME}/clock_speed_${NAME}.txt" &
@@ -63,7 +80,7 @@ else
     echo "END ATTACK ${i}" $(date +"%H:%M:%S") >> ${NAME}/log.txt
     sleep ${WAIT_TIME}
   done
-  sudo kill -SIGUSR1 ${_pid}
+  sudo kill -SIGINT ${_pid}
   #sleep 1
   #sudo kill ${_pid_clock_speed}
 fi
