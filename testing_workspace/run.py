@@ -101,10 +101,12 @@ elif(args.profile == True):
         interruptData = [int(line.strip()) for line in f.readlines()]
     ranges = [(interruptData[i], interruptData[i+1]) for i in range(0, len(interruptData), 2)]
     total, count = 0, 0
+    totalSamples = 0
     for start, end in ranges:
         if start < 0 or end > len(data_new) or start >= end:
             print(f"Invalid range ({start}, {end})")
         else:
+            totalSamples += end - start
             average = sum(data_new[start:end]) / ((end-start))
             total += average
             count += 1
@@ -117,6 +119,7 @@ elif(args.profile == True):
     print("Average time: {} ms".format(averageTime))
     print("Number of instructions: {} million".format(numInstructions))
     print("Average power value: {}".format(averagePower))
+    print("Average number of power values: {}".format(totalSamples))
     print("DATA FILE: {0}/data.txt".format(name))
 
 # ______________________________________________________________________________________________________
