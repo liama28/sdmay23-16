@@ -17,7 +17,7 @@
 /* Try keeping this value high enough, so the signature is noticeable
 and you can collect good data but not so high the it takes more than
 like 3 seconds to execute. */
-#define LOOPS 375000
+#define LOOPS 170000
 
 // Number of times instructions are repeated
 /* We want this value to be large so the number of instructions that
@@ -31,7 +31,7 @@ large. */
 instructions that are executed. */
 
 // Number of repeated instructions
-#define NUM_REPEAT 0
+#define NUM_REPEAT 3
 
 //Number of pre repeated instruction
 #define NUM_PRE_REPEAT 0
@@ -48,6 +48,8 @@ int main(int argc, const char **argv) {
     start = clock();
 
     // _____________________________________________________________
+
+    int* x86_mem = (int*) malloc(1 * sizeof(int)); 
 
     asm volatile(
         // ____ Pre Loop ____
@@ -66,7 +68,9 @@ int main(int argc, const char **argv) {
             ".rept "XSTR(REPEAT)"\n\t"
 
                 // ____ Repeated Instructions ____
-                
+                "movl $0xCE23A,(%%rax)\n\t"
+                "mov (%%rax), %%rbx\n\t"
+                "mov %%rbx, (%%rax)\n\t"
             
             ".endr;"
 
@@ -76,9 +80,9 @@ int main(int argc, const char **argv) {
 
 
         :                               // Outputs
-        :                               // Inputs
+        : "r" (x86_mem)                              // Inputs
         // Any registers used
-        : "ecx"                        // Clobbered registers or "memory"
+        : "ecx", "rax", "rbx", "memory"                        // Clobbered registers or "memory"
     );
 
     // _____________________________________________________________

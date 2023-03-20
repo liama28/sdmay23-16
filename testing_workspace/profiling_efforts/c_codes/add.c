@@ -17,7 +17,7 @@
 /* Try keeping this value high enough, so the signature is noticeable
 and you can collect good data but not so high the it takes more than
 like 3 seconds to execute. */
-#define LOOPS 375000
+#define LOOPS 3267973
 
 // Number of times instructions are repeated
 /* We want this value to be large so the number of instructions that
@@ -31,10 +31,10 @@ large. */
 instructions that are executed. */
 
 // Number of repeated instructions
-#define NUM_REPEAT 0
+#define NUM_REPEAT 1
 
 //Number of pre repeated instruction
-#define NUM_PRE_REPEAT 0
+#define NUM_PRE_REPEAT 1
 
 // _____________________________________________________________
 
@@ -51,7 +51,7 @@ int main(int argc, const char **argv) {
 
     asm volatile(
         // ____ Pre Loop ____
-
+        "mov $2, %%ebx\n\t"                 // load 2 into ebx
 
         // Number of loops loaded into counting register 'ecx'
         "mov $"XSTR(LOOPS)", %%ecx\n\t"       // i = LOOPS;               
@@ -60,13 +60,13 @@ int main(int argc, const char **argv) {
         "loop1:\n\t"
 
             // ____ Pre Repeat ____
-
+            "movl $0, %%eax\n\t" 
 
             // ____ Repeat Start ____
             ".rept "XSTR(REPEAT)"\n\t"
 
                 // ____ Repeated Instructions ____
-                
+                "add %%ebx, %%eax\n\t"
             
             ".endr;"
 
@@ -78,7 +78,7 @@ int main(int argc, const char **argv) {
         :                               // Outputs
         :                               // Inputs
         // Any registers used
-        : "ecx"                        // Clobbered registers or "memory"
+        : "ecx", "ebx", "eax"                        // Clobbered registers or "memory"
     );
 
     // _____________________________________________________________

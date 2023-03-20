@@ -1,6 +1,5 @@
 function []=Graph_data(arg1)
 
-cd ~/Desktop/Senior_Design/sdmay23-16/testing_workspace/;
 clc;
 fid = readmatrix(arg1);
 
