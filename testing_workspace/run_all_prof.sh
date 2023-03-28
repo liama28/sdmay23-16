@@ -1,5 +1,5 @@
 echo "Instruction, Time (ms), Instructions (M), Power"
-for name in add_mem add fmul imul mov_mem mov mulx_mem mulx sleep
+for name in add_mem add fmul imul mov_mem mov mulx_mem mulx sleep prefetchw rdtsc
 do
     python3 run.py -p -n profile_${name} profiling_efforts/c_codes/${name}.c >> profile_${name}.txt
     avg_time=$(awk 'NR==20 {print $3}' "profile_${name}.txt")
