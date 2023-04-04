@@ -87,3 +87,6 @@ MANIFEST
 
 # VSCODE Stuff
 .vscode/
+
+# Results
+*profile_*
