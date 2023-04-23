@@ -20,7 +20,7 @@ TEST=$6
 
 # ssh info for the remote test laptop
 TL_USERNAME=sdmay23-16
-TL_HOST=10.26.55.73
+TL_HOST=10.26.48.166
 
 # ssh info for the ML server
 MLS_USERNAME=sdmay23_16

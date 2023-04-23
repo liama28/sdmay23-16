@@ -12,12 +12,15 @@ class UI(QDialog):
         self.model_result_dir = "None"
         self.attack_type = "None"
         self.attack_name = "None"
+        self.console_display_string = ""
+        self.errors_keywords = ["Quitting run..."]
+        self.error_found = "False"
         self.ssh_helper_location = os.getcwd() + "/Scripts/ssh_helper.sh"
         self.model_helper_location = os.getcwd() + "/Scripts/model_helper.sh"
         self.init_UI()
     
     ################################################################################################
-
+    # initializes UI components
     ################################################################################################
     def init_UI(self):
 
@@ -33,9 +36,9 @@ class UI(QDialog):
         self.useStylePaletteCheckBox = QCheckBox("&Use style's standard palette")
         self.useStylePaletteCheckBox.setChecked(True)
 
-        self.create_attack_selection_module()
-        self.create_File_Upload_Module()
-        self.create_Run_Attack_Module()
+        self.select_attack_type_function()
+        self.file_upload_function()
+        self.run_function()
         self.create_console()
         
         styleComboBox.textActivated.connect(self.changeStyle)
@@ -71,7 +74,7 @@ class UI(QDialog):
         self.changeStyle('macOS')
     
     ################################################################################################
-
+    #Function to open a new window with the executed attack's results
     ################################################################################################
     def open_attack_results(self):
         self.w = results.Results(self.model_result_dir, self.attack_name)
@@ -79,14 +82,14 @@ class UI(QDialog):
         self.results_button.setDisabled(True)
     
     ################################################################################################
-
+    # Function which all to change the style of the UI
     ################################################################################################
     def changeStyle(self, styleName):
         QApplication.setStyle(QStyleFactory.create(styleName))
         self.changePalette()
 
     ################################################################################################
-    #
+    # Function to change the Pallete of the UI
     ################################################################################################
     def changePalette(self):
         if (self.useStylePaletteCheckBox.isChecked()):
@@ -95,15 +98,16 @@ class UI(QDialog):
             QApplication.setPalette(self.originalPalette)
     
     ################################################################################################
-    # 
+    # Function which create the console widget and initializes its attributes
     ################################################################################################        
     def create_console(self):
         self.console = QGroupBox()
     
         console_label = QLabel("Attack Execution Log")
-        self.display = QTextEdit()
+        self.display = QLabel()
 
-        console_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        scrollArea = QScrollArea()
+        scrollArea.setWidget(self.display)
 
         #Set the Layout
         layout = QVBoxLayout()
@@ -114,7 +118,7 @@ class UI(QDialog):
     ################################################################################################
     #
     ################################################################################################
-    def create_attack_selection_module(self):
+    def select_attack_type_function(self):
         self.attack_selection_module = QGroupBox()
 
         ################################################################################################
@@ -126,11 +130,13 @@ class UI(QDialog):
                 self.file_upload_module.setDisabled(True)
             else:
                 self.file_upload_module.setDisabled(False)
+                self.console_display_string = ""
+                self.display.setText(self.console_display_string)
                 
             
         # Widget Definition
         self.attack_type_dropbox = QComboBox()
-        self.attack_type_dropbox.addItems(['Select','Spectre', 'Row-Hammer'])
+        self.attack_type_dropbox.addItems(['Select','Spectre'])
         attack_type_label = QLabel("Attack Type")
         attack_type_label.setBuddy(self.attack_type_dropbox)
         self.attack_type_dropbox.activated.connect(evaluate_Dropbox_Value)
@@ -148,11 +154,11 @@ class UI(QDialog):
     ################################################################################################
 
     ################################################################################################
-    def create_File_Upload_Module(self):
+    def file_upload_function(self):
         self.file_upload_module = QGroupBox()
 
         ################################################################################################
-
+        # Allows user to upload the source code of their attack
         ################################################################################################
         def get_file():
             dialog = QFileDialog()
@@ -191,7 +197,7 @@ class UI(QDialog):
     ################################################################################################
 
     ################################################################################################
-    def create_Run_Attack_Module(self):
+    def run_function(self):
         self.run_attack_module = QGroupBox()
 
         ################################################################################################
@@ -204,33 +210,62 @@ class UI(QDialog):
         
         def processMLData(numFiles, name, dir):
             output_file = dir + "/" + name + '/X_attack_test_15.csv'
-            try:
-                outfile = open(output_file, 'w+', newline = '')
-                writer = csv.writer(outfile)
-                for i in range(numFiles):
-                    file = "{0}/{1}/data_{2}.txt".format(dir,name,i+1)
-                    with open(file, 'r') as f1:
-                        data1 = list(csv.reader(f1))
-                    diff = [int(data1[i+1][0])-int(data1[i][0]) for i in range(len(data1)-1)]
-                    writer.writerow(diff)
-            except IOError:
-                self.display.setText("Detected Attack Running: Run Failed")
+            outfile = open(output_file, 'w+', newline = '')
+            writer = csv.writer(outfile)
+            for i in range(numFiles):
+                file = "{0}/{1}/data_{2}.txt".format(dir,name,i+1)
+                with open(file, 'r') as f1:
+                    data1 = list(csv.reader(f1))
+                diff = [int(data1[i+1][0])-int(data1[i][0]) for i in range(len(data1)-1)]
+                writer.writerow(diff)
+            
+
+        def check_parameters(self):
+            if (use_default_parameters.isChecked()):
+                use_default_parameters.setChecked(True)
+                Wait_Time_Input.setDisabled(True)
+                runs_Input.setDisabled(True)
+            else:
+                use_default_parameters.setChecked(False)
+                Wait_Time_Input.setDisabled(False)
+                runs_Input.setDisabled(False)
+        
+        ################################################################################################
+        # Function to reset all necessary widgets before a new attack is ran
+        ################################################################################################
+        def reset_widgets():
+            if(self.error_found == "False"):
+                self.results_button.setDisabled(False)
+            self.run_attack_module.setDisabled(True)
+            self.attack_type_dropbox.setCurrentIndex(0)
+            self.file_upload_module.setDisabled(True)
+            self.error_found = "False"
+
+        ################################################################################################
+        # Function
+        ################################################################################################    
+        def read_attack_log(dir):
+            for error in self.errors_keywords:
+                search_errors(dir,error)
+            self.display.setText(self.console_display_string)  
         
         ################################################################################################
 
         ################################################################################################
-        def reset_widgets():
-            self.results_button.setDisabled(False)
-            self.run_attack_module.setDisabled(True)
-            self.attack_type_dropbox.setCurrentIndex(0)
-            self.file_upload_module.setDisabled(True)
+        def search_errors(dir,word):
+            with open(dir, 'r') as fp:
+            #read all lines in a list
+                lines = fp.readlines()
+                for line in lines:
+                    # check if string present on a current line
+                    if line.find(word) != -1:
+                        self.console_display_string += line + '\n'
+                        self.error_found = 'True'
+                    else:
+                        self.error_found = 'False'
+            if(self.error_found == "False"):
+                self.console_display_string = "Execution Successful"            
 
-        ################################################################################################
-
-        ################################################################################################    
-        def read_attack_log(dir):
-            log = open(dir, "r").read()
-            self.display.setText(log)  
         
         ################################################################################################
 
@@ -241,7 +276,6 @@ class UI(QDialog):
             runs = runs_Input.text()
             wait_time = Wait_Time_Input.text()
             Test_mode = False
-            Test_run = None
         
             self.display.setText("")
             # Simply runs the attack (runs) amount of times with (wait_time) sleep between each attack
@@ -256,18 +290,23 @@ class UI(QDialog):
             # Runs the attack 15 times with 5001 data points collected for each atttac and 5s sleep between each run
             
             else:
-                if(Test_run == None): 
-                    runs = 15
-                os.system("sh " + self.ssh_helper_location + 
-                          " {0} {1} {2} {3} {4} 0 >> {5}_log.txt".format(results_folder,os.path.abspath(self.source),self.attack_name,runs,1,self.attack_name))
-                processMLData(runs,self.attack_name, results_folder)
-                os.system("sh " + self.model_helper_location + 
-                          " {0} {1} {2} {3} {4} 0".format(results_folder,os.path.abspath(self.source),self.attack_name,runs,1,self.attack_name))
-        
-            os.system("mv {0}_log.txt {1}/{2}".format(self.attack_name,results_folder,self.attack_name))    
+                if(use_default_parameters.isChecked()): 
+                    
+                    os.system("sh " + self.ssh_helper_location + 
+                          " {0} {1} {2} {3} {4} 0 >> {5}_log.txt".format(results_folder,os.path.abspath(self.source),self.attack_name,15,1,self.attack_name))
+                    os.system("mv {0}_log.txt {1}/{2}".format(self.attack_name,results_folder,self.attack_name))
+                    log_file_directory = results_folder + "/" + self.attack_name + "/" + self.attack_name + "_log.txt"
+                    read_attack_log(log_file_directory)
+                    if(self.error_found == "False"):
+                        processMLData(15,self.attack_name, results_folder)
+                        os.system("sh " + self.model_helper_location + 
+                          " {0} {1} {2} {3} {4} 0".format(results_folder,os.path.abspath(self.source),self.attack_name,15,1,self.attack_name))
+                
+                else:
+                    print("2")
+
+            
             self.model_result_dir = results_folder + "/" + self.attack_name + "/results.txt" 
-            log_file_directory = results_folder + "/" + self.attack_name + "/" + self.attack_name + "_log.txt"
-            read_attack_log(log_file_directory)
             reset_widgets()
             Wait_Time_Input.setText("")
             runs_Input.setText("")
@@ -284,12 +323,16 @@ class UI(QDialog):
             "border-color: black;" + 
             "font: bold 11px;" +
             "min-width: 10em;padding: 6px")
+        use_default_parameters = QCheckBox("Use Default Parameters")
+        use_default_parameters.setChecked(True)
+        use_default_parameters.toggled.connect(check_parameters)
         
-        #Define Widgets
         Wait_Time_Label = QLabel("Wait Time Between Runs")
         Wait_Time_Input = QLineEdit()
+        Wait_Time_Input.setDisabled(True)
         Runs_Label = QLabel("Number of Runs")
         runs_Input = QLineEdit()
+        runs_Input.setDisabled(True)
 
         # Widget Alignments #
         Runs_Label.setAlignment(Qt.AlignmentFlag.AlignLeft)
@@ -299,6 +342,7 @@ class UI(QDialog):
 
         # Setting Layout
         layout = QVBoxLayout()
+        layout.addWidget(use_default_parameters)
         layout.addWidget(Runs_Label)
         layout.addWidget(runs_Input)
         layout.addWidget(Wait_Time_Label)
