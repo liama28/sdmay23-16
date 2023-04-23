@@ -98,7 +98,7 @@ class UI(QDialog):
             QApplication.setPalette(self.originalPalette)
     
     ################################################################################################
-    # Function which create the console widget and initializes its attributes
+    # Function which creates the console widget and initializes its attributes
     ################################################################################################        
     def create_console(self):
         self.console = QGroupBox()
@@ -109,6 +109,17 @@ class UI(QDialog):
         scrollArea = QScrollArea()
         scrollArea.setWidget(self.display)
 
+        self.display.setStyleSheet(
+            "background-color: #000000;" +
+            "border-style: outset;" +
+            "border-width: 1px;" +
+            "border-radius: 10px; " +
+            "border-color: black;" + 
+            "font: bold 11px;" +
+            "min-width: 10em;padding: 6px")
+        
+        console_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+
         #Set the Layout
         layout = QVBoxLayout()
         layout.addWidget(console_label)
@@ -116,13 +127,13 @@ class UI(QDialog):
         self.console.setLayout(layout)
     
     ################################################################################################
-    #
+    # Function which creates the attack type select widget and initializes its attributes
     ################################################################################################
     def select_attack_type_function(self):
         self.attack_selection_module = QGroupBox()
 
         ################################################################################################
-
+        #Listener function to detect the chaange in the attack type selection
         ################################################################################################
         def evaluate_Dropbox_Value():
             self.attack_type = self.attack_type_dropbox.currentText()
@@ -152,20 +163,20 @@ class UI(QDialog):
         self.attack_selection_module.setLayout(layout)
 
     ################################################################################################
-
+    # Function which creates the file upload widget and initializes its attributes
     ################################################################################################
     def file_upload_function(self):
         self.file_upload_module = QGroupBox()
 
         ################################################################################################
-        # Allows user to upload the source code of their attack
+        # Listener Function which allows user to upload the source code of their attack
         ################################################################################################
         def get_file():
             dialog = QFileDialog()
             if dialog.exec():
                 files = dialog.selectedFiles()
                 self.source = files[0]
-                file_selected.setText(os.path.basename(self.source))
+                self.file_selected.setText(os.path.basename(self.source))
                 #Enable Run Widgets
                 self.run_attack_module.setDisabled(False)
 
@@ -184,18 +195,18 @@ class UI(QDialog):
 
         #Widget Alignmet 
         source_code_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        file_selected = QLabel("No file selected")
-        file_selected.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.file_selected = QLabel("No file selected")
+        self.file_selected.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         # Setting Layout
         layout = QVBoxLayout()
         layout.addWidget(source_code_label)
-        layout.addWidget(file_selected)
+        layout.addWidget(self.file_selected)
         layout.addWidget(upload_source_button)
         self.file_upload_module.setLayout(layout)
     
     ################################################################################################
-
+    # Function which creates the run attack widget and initializes its attributes
     ################################################################################################
     def run_function(self):
         self.run_attack_module = QGroupBox()
@@ -219,7 +230,9 @@ class UI(QDialog):
                 diff = [int(data1[i+1][0])-int(data1[i][0]) for i in range(len(data1)-1)]
                 writer.writerow(diff)
             
-
+        ################################################################################################
+        # Listener function to evaluate which set of parameters to use based on the checkbox
+        ################################################################################################
         def check_parameters(self):
             if (use_default_parameters.isChecked()):
                 use_default_parameters.setChecked(True)
@@ -240,18 +253,25 @@ class UI(QDialog):
             self.attack_type_dropbox.setCurrentIndex(0)
             self.file_upload_module.setDisabled(True)
             self.error_found = "False"
+            self.file_selected.setText("No File Selected")
+            self.source = "None"
 
         ################################################################################################
-        # Function
-        ################################################################################################    
+        # Function to scan the log file generared by the ssh script and search for errors
+        ################################################################################################   
+        # Argument 1: the directory of the log file
+        ################################################################################################   
         def read_attack_log(dir):
             for error in self.errors_keywords:
                 search_errors(dir,error)
             self.display.setText(self.console_display_string)  
         
-        ################################################################################################
-
-        ################################################################################################
+       ################################################################################################
+        # Helper-Function used by the function above. Scans the log file and searches for error keywords
+        ################################################################################################   
+        # Argument 1: the directory of the log file
+        # Argument 2: the error keyword to look for in a file
+        ################################################################################################  
         def search_errors(dir,word):
             with open(dir, 'r') as fp:
             #read all lines in a list
@@ -268,7 +288,7 @@ class UI(QDialog):
 
         
         ################################################################################################
-
+        # Function which runs a given attack using the given paramenters by the user
         ################################################################################################
         def run_attack():
             results_folder = os.getcwd() + "/Results/" + self.attack_type_dropbox.currentText()
@@ -303,7 +323,15 @@ class UI(QDialog):
                           " {0} {1} {2} {3} {4} 0".format(results_folder,os.path.abspath(self.source),self.attack_name,15,1,self.attack_name))
                 
                 else:
-                    print("2")
+                    os.system("sh " + self.ssh_helper_location + 
+                          " {0} {1} {2} {3} {4} 0 >> {5}_log.txt".format(results_folder,os.path.abspath(self.source),self.attack_name,runs,wait_time,self.attack_name))
+                    os.system("mv {0}_log.txt {1}/{2}".format(self.attack_name,results_folder,self.attack_name))
+                    log_file_directory = results_folder + "/" + self.attack_name + "/" + self.attack_name + "_log.txt"
+                    read_attack_log(log_file_directory)
+                    if(self.error_found == "False"):
+                        processMLData(int(runs),self.attack_name, results_folder)
+                        os.system("sh " + self.model_helper_location + 
+                          " {0} {1} {2} {3} {4} 0".format(results_folder,os.path.abspath(self.source),self.attack_name,15,1,self.attack_name))
 
             
             self.model_result_dir = results_folder + "/" + self.attack_name + "/results.txt" 
@@ -333,6 +361,7 @@ class UI(QDialog):
         Runs_Label = QLabel("Number of Runs")
         runs_Input = QLineEdit()
         runs_Input.setDisabled(True)
+
 
         # Widget Alignments #
         Runs_Label.setAlignment(Qt.AlignmentFlag.AlignLeft)
