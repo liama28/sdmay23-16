@@ -1,6 +1,5 @@
 #!/bin/bash
 #sh scp_helper.sh ~/Desktop/Senior_Design/sdmay23-16/Liam_experiments/ Source_test.c testrun3423 3 1
-# . ./ipaddr.cfg
 
 #############
 # ARGUMENTS #
@@ -17,10 +16,6 @@ RUNS=$4
 WAIT_TIME=$5
 # 0 or 1. 0 = Collect data for the ML model. 1 = run a simple attack
 TEST=$6
-
-# ssh info for the remote test laptop
-TL_USERNAME=sdmay23-16
-# TL_HOST=$IPADDR
 
 # ssh info for the ML server
 MLS_USERNAME=sdmay23_16

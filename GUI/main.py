@@ -13,7 +13,7 @@ class UI(QDialog):
         self.attack_type = "None"
         self.attack_name = "None"
         self.console_display_string = ""
-        self.errors_keywords = ["Quitting run..."]
+        self.errors_keywords = ["Quitting run...", "ssh: Could not resolve hostname", "Connection timed out", "Connection refused"]
         self.error_found = "False"
         self.ssh_helper_location = os.getcwd() + "/Scripts/ssh_helper.sh"
         self.model_helper_location = os.getcwd() + "/Scripts/model_helper.sh"
@@ -115,8 +115,7 @@ class UI(QDialog):
             "border-width: 1px;" +
             "border-radius: 10px; " +
             "border-color: black;" + 
-            "font: bold 11px;" +
-            "min-width: 10em;padding: 6px")
+            "font: bold 11px;")
         
         console_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
 
@@ -133,7 +132,7 @@ class UI(QDialog):
         self.attack_selection_module = QGroupBox()
 
         ################################################################################################
-        #Listener function to detect the chaange in the attack type selection
+        #Listener function to detect the change in the attack type selection
         ################################################################################################
         def evaluate_Dropbox_Value():
             self.attack_type = self.attack_type_dropbox.currentText()
@@ -183,14 +182,7 @@ class UI(QDialog):
         # Widget definition
         upload_source_button = QPushButton('Upload')
         upload_source_button.clicked.connect(get_file)
-        upload_source_button.setStyleSheet(
-            "background-color: #D2042D;" +
-            "border-style: outset;" +
-            "border-width: 1px;" +
-            "border-radius: 10px; " +
-            "border-color: black;" + 
-            "font: bold 11px;" +
-            "min-width: 10em;padding: 6px")
+        
         source_code_label = QLabel("Attack Source Code File")
 
         #Widget Alignmet 
@@ -343,14 +335,7 @@ class UI(QDialog):
         # Widget Defined # 
         run_button = QPushButton("Run Attack")
         run_button.clicked.connect(run_attack)
-        run_button.setStyleSheet(
-            "background-color: #D2042D;" +
-            "border-style: outset;" +
-            "border-width: 1px;" +
-            "border-radius: 10px; " +
-            "border-color: black;" + 
-            "font: bold 11px;" +
-            "min-width: 10em;padding: 6px")
+        
         use_default_parameters = QCheckBox("Use Default Parameters")
         use_default_parameters.setChecked(True)
         use_default_parameters.toggled.connect(check_parameters)

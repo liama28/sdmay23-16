@@ -19,7 +19,9 @@ class Results(QWidget):
         self.setLayout(mainLayout)
         self.setWindowTitle("Results")
     
-    
+    ######################################################################
+    # Function to set the page display components to the correct attack
+    ######################################################################
     def define_attack(self):
         self.Title = QGroupBox()
         label = QLabel("")
@@ -30,7 +32,10 @@ class Results(QWidget):
         label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         
         self.Title.setLayout(layout)
-        
+
+    ######################################################################
+    # Function to open the attack's result file and display it on the page
+    ######################################################################  
     def open_results(self):
         self.results_layout = QGroupBox()
 

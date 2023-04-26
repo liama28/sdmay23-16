@@ -1,6 +1,5 @@
 #!/bin/bash
 #sh scp_helper.sh ~/Desktop/Senior_Design/sdmay23-16/Liam_experiments/ Source_test.c testrun3423 3 1
-# . ./ipaddr.cfg
 
 #############
 # ARGUMENTS #
@@ -21,10 +20,6 @@ TEST=$6
 # ssh info for the remote test laptop
 TL_USERNAME=sdmay23-16
 TL_HOST=10.26.48.166
-
-# ssh info for the ML server
-MLS_USERNAME=sdmay23_16
-MLS_HOST=berk.ece.iastate.edu
 
 # Grab file name from source file.
 #(ex: basename /attack_code/spectre/Source.c = Source.c)
