@@ -1,7 +1,0 @@
-Spectre_Attack_0228-123604/faddp1120Out.c: In function ‘readMemoryByte’:
-Spectre_Attack_0228-123604/faddp1120Out.c:46:7: error: redeclaration of ‘i’ with no linkage
-   46 |   int i;
-      |       ^
-Spectre_Attack_0228-123604/faddp1120Out.c:41:14: note: previous declaration of ‘i’ was here
-   41 |   int tries, i, j, k, mix_i, junk = 0;
-      |              ^
