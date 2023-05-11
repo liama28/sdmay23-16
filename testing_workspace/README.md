@@ -31,4 +31,22 @@ Before you use the tool, both the machine learning server and testing laptop mus
    - `MLS_HOST=<server_ip/hostname>`
    - `MLS_WORKSPACE=<server_workspace_path>`
 
+# Usage
 
+## Run and Classify
+
+`pyhon3 run.py <attac_code_path/source.c>`
+
+Running run.py without any flags will run the provided attack code, get data back in the directory name `ATR_<timestamp>`, and print ML results when the signature is ran against the model. Using the `-s` flag will skip the step where the data is classified.
+
+## Simple Run
+
+`python3 run.py -t <attac_code_path/source.c> -r <number_of_runs> -w <wait_time_between_attacks>`
+
+The `-t` flag will run a simple test attack and provide a data signature and timing values. Default, it will run the attack five times with 0.2 seconds between each attack. You can use the `-r` and `-w` flags to change the number of runs and wait time.  
+
+## Profile
+
+`python3 run.py -p <c_code_path/inst.c>`
+
+The `-p` flag will profile a given C program, given it follows the template `template.c`. In the template, you can insert different x86 instructions and get data back about their effects on power consumption. 
