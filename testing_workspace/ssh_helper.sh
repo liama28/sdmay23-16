@@ -17,13 +17,8 @@ WAIT_TIME=$5
 # 0 or 1. 0 = Collect data for the ML model. 1 = run a simple attack
 TEST=$6
 
-# ssh info for the remote test laptop
-TL_USERNAME=sdmay23-16
-TL_HOST=10.26.50.56
-
-# ssh info for the ML server
-MLS_USERNAME=sdmay23_16
-MLS_HOST=berk.ece.iastate.edu
+# Grab config variables
+source ./config.sh
 
 # Grab file name from source file.
 #(ex: basename /attack_code/spectre/Source.c = Source.c)
@@ -35,7 +30,7 @@ FILE_NAME="$(basename -- $SOURCE_FILE)"
 cd ${SOURCE_DIR}
 mkdir ${NAME}
 # Copy source code to remote test laptop
-ssh -l ${TL_USERNAME} ${TL_HOST} "mkdir ~/testing_workspace/${NAME}"
-scp $SOURCE_DIR$SOURCE_FILE ${TL_USERNAME}@${TL_HOST}:~/testing_workspace/${NAME}/$FILE_NAME
-ssh -l ${TL_USERNAME} ${TL_HOST} "sudo ~/testing_workspace/run_attack.sh ${FILE_NAME} ${NAME} ${RUNS} ${WAIT_TIME} ${TEST}"
-scp -r ${TL_USERNAME}@${TL_HOST}:~/testing_workspace/${NAME} ${SOURCE_DIR}
+ssh -l ${TL_USERNAME} ${TL_HOST} "mkdir ${MLS_WORKSPACE}${NAME}"
+scp $SOURCE_DIR$SOURCE_FILE ${TL_USERNAME}@${TL_HOST}:${MLS_WORKSPACE}${NAME}/$FILE_NAME
+ssh -l ${TL_USERNAME} ${TL_HOST} "sudo ${MLS_WORKSPACE}run_attack.sh ${FILE_NAME} ${NAME} ${RUNS} ${WAIT_TIME} ${TEST}"
+scp -r ${TL_USERNAME}@${TL_HOST}:${MLS_WORKSPACE}${NAME} ${SOURCE_DIR}
