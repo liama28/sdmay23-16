@@ -1,3 +1,0 @@
-gcc: error: Spectre_Attack_0220-174013/SpecSource: No such file or directory
-gcc: fatal error: no input files
-compilation terminated.

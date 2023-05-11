@@ -1,5 +1,0 @@
-Spectre_Attack_0220-175339/sleep1.c: In function ‘readMemoryByte’:
-Spectre_Attack_0220-175339/sleep1.c:69:7: warning: implicit declaration of function ‘usleep’; did you mean ‘sleep’? [-Wimplicit-function-declaration]
-   69 |       usleep(15);
-      |       ^~~~~~
-      |       sleep

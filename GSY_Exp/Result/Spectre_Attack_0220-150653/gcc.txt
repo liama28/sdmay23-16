@@ -1,4 +1,0 @@
-Spectre_Attack_0220-150653/sleep1.c: In function ‘readMemoryByte’:
-Spectre_Attack_0220-150653/sleep1.c:65:7: warning: implicit declaration of function ‘nanosleep’ [-Wimplicit-function-declaration]
-   65 |       nanosleep(1000000000);
-      |       ^~~~~~~~~

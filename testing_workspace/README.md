@@ -15,7 +15,7 @@ Before you use the tool, both the machine learning server and testing laptop mus
    - Make a new directory on the laptop to store data and scripts.
    - Move all the files found in the "server_scripts" directory at the project's root into the new working directory.
      - `scp -r <project path>/server_scripts/* <username>@<test_laptop_host>:<workspace_path>`
-     - Change the access permissions of all the files in the workspace to allow execution
+   - Change the access permissions of all the files in the workspace to allow execution
      - `chmod +x *`
    - Configure sudo to run with "run_attack.sh"
      - `sudo visudo`
