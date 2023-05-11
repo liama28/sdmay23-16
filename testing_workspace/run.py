@@ -111,7 +111,11 @@ elif(args.profile == True):
             total += average
             count += 1
             print(f"Average value for range ({start}, {end}): {average}")
-    averagePower = total / count
+    if (count == 0):
+        print("No valid ranges found")
+        averagePower = 0
+    else:
+        averagePower = total / count
 
 
     # Stats

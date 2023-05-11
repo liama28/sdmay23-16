@@ -19,7 +19,7 @@ TEST=$6
 
 # ssh info for the remote test laptop
 TL_USERNAME=sdmay23-16
-TL_HOST=10.26.48.166
+TL_HOST=10.26.50.56
 
 # Grab file name from source file.
 #(ex: basename /attack_code/spectre/Source.c = Source.c)
